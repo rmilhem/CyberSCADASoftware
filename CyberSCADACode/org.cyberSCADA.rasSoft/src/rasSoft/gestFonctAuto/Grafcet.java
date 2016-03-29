@@ -11,12 +11,12 @@ public class Grafcet {
 	boolean stop;
 	MasterModbus m;
 	/*----------------------------------------*/
-	
+
 	boolean fin1 = false;
 	boolean fin2 = false;
 	boolean fin3 = false;
 	boolean fin4 = false;
-	
+
 	boolean fonctionnement = false;
 
 	/*---------------------------------------*/
@@ -50,7 +50,7 @@ public class Grafcet {
 			setDepart_transfert(true);
 			setDepart_transfert(false);//on donne une impulsion sur depart_transfert pour lancer le grafcet de transfert
 			while(!isTransi_S511x());
-			
+
 			//-------------------------------//
 			setRotation_moteur(true);
 			try {
@@ -68,7 +68,7 @@ public class Grafcet {
 
 			t1.start();
 			t2.start();
-			
+
 			while(!(fin1 == true && fin2 == true)){System.out.println("thread1&2");}
 
 			try {
@@ -77,15 +77,15 @@ public class Grafcet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			while(m.ReadCoil("9","1","1").equals("1")){
-				
+
 				Thread3 t3 = new Thread3(this);
 				Thread4 t4 = new Thread4(this);
-				
+
 				setFin3(false);
 				setFin4(false);
-				
+
 				setDepart_remplissage(true);
 				setDepart_remplissage(false);//on donne une impulsion sur depart_transfert pour lancer le grafcet de transfert
 				setDepart_bouchage(true);
@@ -94,7 +94,7 @@ public class Grafcet {
 				setDepart_transfert(false);
 				t3.start();
 				t4.start();
-				
+
 				while(!(isAttente_Tube() == true && fin3 == true && fin4 == true)){System.out.println("attente");}
 			}
 			System.out.println("fin");
@@ -109,7 +109,7 @@ public class Grafcet {
 		else
 			return false;
 	}
-	
+
 	public boolean isAttente_Tube() {
 		if(m.ReadCoil("19","1","1").equals("1")){
 			return true;
@@ -125,7 +125,7 @@ public class Grafcet {
 		else
 			return false;
 	}
-	
+
 	public  boolean isTransi_S410x() {
 		if(m.ReadCoil("6","1","1").equals("1")){
 			return true;
@@ -172,7 +172,7 @@ public class Grafcet {
 		m.WriteCoil("100", depart_transfert, "1");
 	}
 
-	
+
 	public boolean isPresence_tube_remplissage() {
 		if(m.ReadCoil("17","1","1").equals("1")){
 			return true;
@@ -189,7 +189,7 @@ public class Grafcet {
 	public void setDepart_remplissage(boolean depart_remplissage) {
 		m.WriteCoil("101", depart_remplissage, "1");
 	}
-	
+
 	public void setDepart_bouchage(boolean depart_bouchage) {
 		m.WriteCoil("104", depart_bouchage, "1");
 	}
@@ -203,7 +203,7 @@ public class Grafcet {
 			return false;
 		}
 	}
-	
+
 	public void setFin1(boolean b)
 	{
 		this.fin1 = b;
@@ -233,7 +233,7 @@ public class Grafcet {
 
 	public void setActionneurHaut(boolean b) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public boolean isActionneurBas() {
@@ -243,7 +243,7 @@ public class Grafcet {
 
 	public void setActionneurBas(boolean b) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public boolean isMoteurBalle() {
@@ -253,9 +253,11 @@ public class Grafcet {
 
 	public void setMoteurBalle(boolean b) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-
+	public void setPinces(boolean b) {
+		// TODO
+	}
 
 }
