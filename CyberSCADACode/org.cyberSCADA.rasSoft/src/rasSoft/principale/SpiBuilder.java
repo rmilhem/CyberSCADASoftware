@@ -16,7 +16,7 @@ public class SpiBuilder {
 
 				if(numAutomate == 1){
 
-					// capteur de presence du tube : 0
+					// presence tube remplissage 0
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
 					// Actionneur chute
@@ -25,23 +25,34 @@ public class SpiBuilder {
 					// bas : 2
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					//Moteur Balle
+					// Moteur Balle 3
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					//remplirTube
+					// remplirTube 4
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// Running
+					// Running 5
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// Tourner Plateau
+					// Tourner Plateau 6
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
 				} if (numAutomate == 2) {
-					// bouchonner
+					// bouchonner 7
 					spi.addDigitalOut(new SimpleDigitalOut(false));
+
+					// presence bouchon 8
+					spi.addDigitalOut(new SimpleDigitalOut(false));
+
+					// presence tube bouchage 9
+					spi.addDigitalOut(new SimpleDigitalOut(false));
+
 				} if (numAutomate == 3) {
-					// actionPinces
+
+					// presence tube pinces 10
+					spi.addDigitalOut(new SimpleDigitalOut(false));
+
+					// actionPinces 11
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 				}
 
@@ -49,7 +60,7 @@ public class SpiBuilder {
 					spi.addRegister(new SimpleRegister(0));
 				}
 				  //3. Set the image on the coupler
-				  // Attention ici ModbusCoupler crÃ©e une copie de spi !!!
+				  // Attention ici ModbusCoupler crée une copie de spi !!!
 				  // on utilisera donc par la suite ModbusCoupler.getReference().getProcessImage() plutôt que spi
 				  ModbusCoupler.getReference().setProcessImage(spi);
 				  ModbusCoupler.getReference().setMaster(false);
