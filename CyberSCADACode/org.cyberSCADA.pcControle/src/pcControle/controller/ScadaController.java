@@ -2,7 +2,6 @@ package pcControle.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import pcControle.data.AutomLecture;
 import pcControle.ihm.IHM_Pingpong;
 import pcControle.right.Monitor;
@@ -184,5 +183,4 @@ public class ScadaController implements Initializable{
 		actionPinceTube();
 		else System.out.println("l'automate est en train de tourner ! Arrêtez le d'abord");
 	}
-	
 }

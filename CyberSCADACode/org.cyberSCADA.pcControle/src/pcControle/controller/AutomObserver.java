@@ -3,8 +3,6 @@ package pcControle.controller;
 import java.util.Observable;
 import java.util.Observer;
 
-import pcControle.data.AutomX;
-
 
 // Ne sert qu'à mettre la vue à jour.
 public class AutomObserver implements Observer
