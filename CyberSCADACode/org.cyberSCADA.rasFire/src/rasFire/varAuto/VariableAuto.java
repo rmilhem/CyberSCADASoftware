@@ -1,5 +1,6 @@
 package rasFire.varAuto;
 
 public enum VariableAuto {
-	capteurPresence, actionneurChuteHaut, actionneurChuteBas, moteurBalle, running, remplissage, tournerPlateau, bouchonner, actionPinces
+	presenceTubeBalle, presenceTubeBouchons,capteurBouchons, actionneurChuteHaut,
+	stock_tube, actionneurChuteBas, moteurBalle, running, remplissage, tournerPlateau, bouchonner, actionPinces
 }
