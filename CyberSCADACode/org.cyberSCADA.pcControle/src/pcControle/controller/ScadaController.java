@@ -46,8 +46,6 @@ public class ScadaController implements Initializable{
 		autom.addObserver(observer);
 	}
 	@FXML private Label Accumulateur;
-	@FXML private Button back;
-	@FXML private Button startAutomate;
 	// automate bouchons
 	@FXML private Circle presence_tube;
 	@FXML private Circle stock_bouchon;
@@ -82,13 +80,13 @@ public class ScadaController implements Initializable{
 	{
 		setOnOff(VariableAuto.tournerPlateau);
 	}
-	public void actionPinceTube()		
+	public void actionPinceTube()	
 	{
-		
+		setOnOff(VariableAuto.bouchonner);
 	}
-	public void mettreEnStockTube()
+	public void bouchonner()
 	{
-		
+		setOnOff(VariableAuto.actionPinces);
 	}
 	public void refreshAll()
 	{
@@ -127,7 +125,6 @@ public class ScadaController implements Initializable{
 	}
 
 	// ------------------------------------ SIMULATEUR ------------------------------------
-	
 	@FXML private Button startAutomateB;
 	@FXML private Button Actionneur_Haut;
 	@FXML private Button Actionneur_Bas;
@@ -136,6 +133,13 @@ public class ScadaController implements Initializable{
 	@FXML private Button MisEnPlaceTube;
 	@FXML private Button FaireTournerPlateau;	
 	@FXML private Button ActionPinceTube;
+	@FXML private Button back;
+	//@FXML private Button startAutomate;
+	@FXML private Button bouchonner;
+	
+	@FXML public void Bouchonner(ActionEvent event){
+		bouchonner();
+	}
 	
 	@FXML public void backEvent(ActionEvent event)	
 	{
