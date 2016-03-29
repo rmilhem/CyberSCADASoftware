@@ -28,25 +28,33 @@ public class UpdaterAutoReel implements UpdaterAuto {
 					.setMoteurBalle(ModbusCoupler.getReference().getProcessImage().getDigitalOut(4).isSet());
 			// remplir tube
 			threadPrincipal.getGrafcet()
-					.setDepart_remplissage(ModbusCoupler.getReference().getProcessImage().getDigitalOut(6).isSet());
+					.setDepart_remplissage(ModbusCoupler.getReference().getProcessImage().getDigitalOut(5).isSet());
 			// tourner plateau
 			threadPrincipal.getGrafcet()
 					.setRotation_moteur(ModbusCoupler.getReference().getProcessImage().getDigitalOut(7).isSet());
 
 			// si l'automate doit commencer à tourner, et qu'il n'est pas en
 			// train de tourner
-			if (ModbusCoupler.getReference().getProcessImage().getDigitalOut(5).isSet()) {
+			if (ModbusCoupler.getReference().getProcessImage().getDigitalOut(6).isSet()) {
 				// Gestion du fonctionnement l'automate
 				// (synchronisation des "3" Automates )
 				threadPrincipal.start();
 
 			}
 			// si l'automate doit s'arrêter, et qu'il est en train de tourner
-			if (!ModbusCoupler.getReference().getProcessImage().getDigitalOut(5).isSet() && threadPrincipal.isAlive()) {
+			if (!ModbusCoupler.getReference().getProcessImage().getDigitalOut(6).isSet() && threadPrincipal.isAlive()) {
 				// TODO : Changer la façon dont on arrête ce thread
 				threadPrincipal.stop();
 				threadPrincipal.getGrafcet().stop();
 			}
+		} if (numAutomate == 2) {
+			// bouchonner
+			threadPrincipal.getGrafcet()
+					.setDepart_bouchage(ModbusCoupler.getReference().getProcessImage().getDigitalOut(8).isSet());
+		} if (numAutomate == 3) {
+			// actions pinces
+			threadPrincipal.getGrafcet()
+					.setPinces(ModbusCoupler.getReference().getProcessImage().getDigitalOut(12));
 		}
 		// on remet le flag à false
 		ModbusCoupler.getReference().getProcessImage().getDigitalOut(0).set(false);
@@ -70,12 +78,10 @@ public class UpdaterAutoReel implements UpdaterAuto {
 			// Moteur Balle
 			ModbusCoupler.getReference().getProcessImage().getDigitalOut(4).set(threadPrincipal.getGrafcet().isMoteurBalle());
 			// RemplirTube
-			ModbusCoupler.getReference().getProcessImage().getDigitalOut(6).set(threadPrincipal.getGrafcet().isRemplissage());
+			ModbusCoupler.getReference().getProcessImage().getDigitalOut(5).set(threadPrincipal.getGrafcet().isRemplissage());
 			// Tourner Plateau
 			ModbusCoupler.getReference().getProcessImage().getDigitalOut(7).set(threadPrincipal.getGrafcet().isRotation_moteur());
 			// Running
-
-
 		}
 
 	}
