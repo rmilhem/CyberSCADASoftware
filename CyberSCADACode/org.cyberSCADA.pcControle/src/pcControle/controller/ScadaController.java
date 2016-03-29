@@ -176,10 +176,8 @@ public class ScadaController implements Initializable{
 	}
 	@FXML public void MettreTube(ActionEvent event)
 	{
-		if(automLecture.getVar(VariableAuto.running)==0 || automLecture.getVar(VariableAuto.running)==-1)
-		mettreEnStockTube();
-		else System.out.println("l'automate est en train de tourner ! Arrêtez le d'abord");
-	}
+		System.out.println("prevenir werner !");
+}
 	@FXML public void TournerPlateau(ActionEvent event)
 	{
 		if(automLecture.getVar(VariableAuto.running)==0 || automLecture.getVar(VariableAuto.running)==-1)
