@@ -81,7 +81,19 @@ public class UpdaterAutoReel implements UpdaterAuto {
 			ModbusCoupler.getReference().getProcessImage().getDigitalOut(5).set(threadPrincipal.getGrafcet().isRemplissage());
 			// Tourner Plateau
 			ModbusCoupler.getReference().getProcessImage().getDigitalOut(7).set(threadPrincipal.getGrafcet().isRotation_moteur());
-			// Running
+
+		} if (numAutomate == 2) {
+			// bouchonner
+			ModbusCoupler.getReference().getProcessImage().getDigitalOut(8).set(threadPrincipal.getGrafcet().isBouchage());
+			// presence bouchon
+			ModbusCoupler.getReference().getProcessImage().getDigitalOut(9).set(threadPrincipal.getGrafcet().isPresence_bouchon());
+			// presence tube bouchage
+			ModbusCoupler.getReference().getProcessImage().getDigitalOut(10).set(threadPrincipal.getGrafcet().isPresence_tube_bouchage());
+		} if (numAutomate == 3) {
+			// presence tube pinces
+			ModbusCoupler.getReference().getProcessImage().getDigitalOut(11).set(threadPrincipal.getGrafcet().isPresence_tube_pinces());
+			// pinces
+			ModbusCoupler.getReference().getProcessImage().getDigitalOut(12).set(threadPrincipal.getGrafcet().isPincage());
 		}
 
 	}
