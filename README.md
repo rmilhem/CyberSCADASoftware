@@ -1,7 +1,9 @@
 # CyberSCADASoftware
-A set of safe software managing a scada network using Design Pattern
 
-You will find soon the related uml diagrams.
+Projet industriel -- ENSTA Bretagne -- SPID 2A
+Année scolaire 2015-2016
 
+Contributeurs : Werner F. ; L. Wanxin ; Rémi M. ; Antoine P. ; Donatien T. ; Julien T.
 
-How to use it :
+Projet visant à mettre en réseau et à assurer la cyber-sécurité d'automates industriels.
+Il est fait utilisation des ‘security patterns’.
