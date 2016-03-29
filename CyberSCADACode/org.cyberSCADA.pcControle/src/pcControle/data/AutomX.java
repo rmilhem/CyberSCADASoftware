@@ -7,7 +7,7 @@ public class AutomX extends AutomLecture{
 	Com com;
 	private Hashtable<VariableAuto, Integer> ht;
 	// à migrer ailleurs peut être
-	final String firewallIp = "127.0.1.1";
+	final String firewallIp = "127.0.0.1";
 	final int port = 3333;
 	
 	// si com a réussi a ouvrir une connection, et donc si l'automate
