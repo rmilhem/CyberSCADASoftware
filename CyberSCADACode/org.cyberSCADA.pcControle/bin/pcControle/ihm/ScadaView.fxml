@@ -44,7 +44,7 @@
       <Circle fx:id="actionneurBas" fill="WHITE" layoutX="744.0" layoutY="100.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="moteurBalle" fill="WHITE" layoutX="744.0" layoutY="120.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="isRunning" fill="WHITE" layoutX="900.0" layoutY="600.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="isTurning" fill="WHITE" layoutX="744.0" layoutY="140.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="isTurning" fill="WHITE" layoutX="640.0" layoutY="180.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="capteur_tube" fill="WHITE" layoutX="699.0" layoutY="321.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="tube_sur_plateau" fill="WHITE" layoutX="640.0" layoutY="402.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="tube_en_stock" fill="WHITE" layoutX="568.0" layoutY="466.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
@@ -68,7 +68,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="761.0" layoutY="130.0" text="Plateau tourne">
+      <Label layoutX="598.0" layoutY="201.0" text="Plateau tourne">
          <font>
             <Font size="13.0" />
          </font>
@@ -111,7 +111,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Button fx:id="MisEnPlaceTube" layoutX="376.0" layoutY="446.0" mnemonicParsing="false" onAction="#MettreTube" prefHeight="37.0" prefWidth="130.0" text="Mis en place tube" />
+      <Button fx:id="MisEnPlaceTube" layoutX="575.0" layoutY="648.0" mnemonicParsing="false" onAction="#MettreTube" prefHeight="37.0" prefWidth="130.0" text="Mis en place tube" />
       <Button fx:id="ActionPinceTube" layoutX="378.0" layoutY="516.0" mnemonicParsing="false" onAction="#acPinceTube" prefHeight="37.0" prefWidth="127.0" text="Action : Pince Tube" />
       <Button fx:id="bouchonner" layoutX="234.0" layoutY="76.0" mnemonicParsing="false" onAction="#Bouchonner" text="Bouchonner" />
    </children>

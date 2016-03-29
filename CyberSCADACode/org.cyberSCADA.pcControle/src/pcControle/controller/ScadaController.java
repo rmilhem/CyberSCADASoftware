@@ -4,16 +4,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import pcControle.data.AutomLecture;
-import pcControle.data.AutomX;
 import pcControle.ihm.IHM_Pingpong;
 import pcControle.right.Monitor;
 import pcControle.varAuto.VariableAuto;
-/*import controller.Automate_Bales.etat_capteur_bales_rempli;
-import controller.Automate_Bales.etat_capteur_tube;
-import controller.Automate_Bouchons.etat_presence_tube;
-import controller.Automate_Bouchons.etat_stock_bouchon;
-import controller.Automate_Pince_Tube.etat_tube_en_stock;
-import controller.Automate_Pince_Tube.etat_tube_sur_plateau;*/
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
