@@ -90,9 +90,8 @@ public class ScadaController implements Initializable{
 	}
 	public void refreshAll()
 	{
-		
 		//----------------------------- automate bales-------------------------------------
-		setColorCircle(automLecture.getVar(VariableAuto.capteurPresence), capteur_tube);
+		setColorCircle(automLecture.getVar(VariableAuto.presenceTubeBalle), capteur_tube);
 		setColorCircle(automLecture.getVar(VariableAuto.actionneurChuteHaut), actionneurHaut);
 		setColorCircle(automLecture.getVar(VariableAuto.actionneurChuteBas), actionneurBas);
 		setColorCircle(automLecture.getVar(VariableAuto.moteurBalle), moteurBalle);
@@ -100,6 +99,8 @@ public class ScadaController implements Initializable{
 		setColorCircle(automLecture.getVar(VariableAuto.tournerPlateau), isTurning);
 		setColorCircle(automLecture.getVar(VariableAuto.presenceTubeBouchons), presence_tube_bouchons);
 		setColorCircle(automLecture.getVar(VariableAuto.capteurBouchons), stock_bouchon);
+		setColorCircle(automLecture.getVar(VariableAuto.stock_tube), tube_en_stock);
+
 	}
 	
 	private void setOnOff(VariableAuto var){

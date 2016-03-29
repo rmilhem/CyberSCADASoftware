@@ -19,7 +19,7 @@ public class AutomX extends AutomLecture{
 		ht = new Hashtable<VariableAuto, Integer>();
 		ht.put(VariableAuto.actionneurChuteBas, -1);
 		ht.put(VariableAuto.actionneurChuteHaut, -1);
-		ht.put(VariableAuto.capteurPresence, -1);
+		ht.put(VariableAuto.presenceTubeBalle, -1);
 		ht.put(VariableAuto.moteurBalle, -1);
 		ht.put(VariableAuto.running, -1);
 		ht.put(VariableAuto.remplissage, -1);
@@ -28,6 +28,7 @@ public class AutomX extends AutomLecture{
 		ht.put(VariableAuto.capteurBouchons, -1);
 		ht.put(VariableAuto.actionPinces, -1);
 		ht.put(VariableAuto.bouchonner, -1);
+		ht.put(VariableAuto.stock_tube, -1);
 		
 		// création de la capacité de communication de l'automate
 			com = new Com(firewallIp, port, this);
