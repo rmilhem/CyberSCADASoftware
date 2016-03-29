@@ -135,7 +135,6 @@ public class ScadaController implements Initializable{
 	@FXML private Button FaireTournerPlateau;	
 	@FXML private Button ActionPinceTube;
 	@FXML private Button back;
-	//@FXML private Button startAutomate;
 	@FXML private Button bouchonner;
 	
 	@FXML public void Bouchonner(ActionEvent event){
