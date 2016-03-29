@@ -43,7 +43,7 @@ public class UpdaterAutoReel implements UpdaterAuto {
 			}
 			// si l'automate doit s'arrêter, et qu'il est en train de tourner
 			if (!ModbusCoupler.getReference().getProcessImage().getDigitalOut(5).isSet() && threadPrincipal.isAlive()) {
-				// TO DO : Changer la façon dont on arrête ce thread
+				// TODO : Changer la façon dont on arrête ce thread
 				threadPrincipal.stop();
 				threadPrincipal.getGrafcet().stop();
 			}
