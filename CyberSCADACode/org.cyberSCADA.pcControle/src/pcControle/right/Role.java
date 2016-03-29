@@ -1,5 +1,4 @@
 package pcControle.right;
-import java.util.Hashtable;
 
 public class Role {
 	

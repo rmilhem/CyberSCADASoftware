@@ -22,7 +22,7 @@ public class RightBase {
 				rights.addElement(right);
 				right = new Right(VariableAuto.actionneurChuteBas, true, role);
 				rights.addElement(right);
-				right = new Right(VariableAuto.capteurPresence, true, role);
+				right = new Right(VariableAuto.presenceTubeBalle, true, role);
 				rights.addElement(right);
 				right = new Right(VariableAuto.moteurBalle, true, role);
 				rights.addElement(right);
@@ -37,7 +37,7 @@ public class RightBase {
 				rights.addElement(right);
 				right = new Right(VariableAuto.actionneurChuteBas, false, role);
 				rights.addElement(right);
-				right = new Right(VariableAuto.capteurPresence, false, role);
+				right = new Right(VariableAuto.presenceTubeBalle, false, role);
 				rights.addElement(right);
 				right = new Right(VariableAuto.moteurBalle, false, role);
 				rights.addElement(right);

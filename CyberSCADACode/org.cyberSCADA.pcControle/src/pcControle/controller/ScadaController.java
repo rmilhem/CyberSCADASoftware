@@ -2,18 +2,10 @@ package pcControle.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import pcControle.data.AutomLecture;
-import pcControle.data.AutomX;
 import pcControle.ihm.IHM_Pingpong;
 import pcControle.right.Monitor;
 import pcControle.varAuto.VariableAuto;
-/*import controller.Automate_Bales.etat_capteur_bales_rempli;
-import controller.Automate_Bales.etat_capteur_tube;
-import controller.Automate_Bouchons.etat_presence_tube;
-import controller.Automate_Bouchons.etat_stock_bouchon;
-import controller.Automate_Pince_Tube.etat_tube_en_stock;
-import controller.Automate_Pince_Tube.etat_tube_sur_plateau;*/
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -47,7 +39,7 @@ public class ScadaController implements Initializable{
 	}
 	@FXML private Label Accumulateur;
 	// automate bouchons
-	@FXML private Circle presence_tube;
+	@FXML private Circle presence_tube_bouchons;
 	@FXML private Circle stock_bouchon;
 	// automate bales
 	@FXML private Circle actionneurHaut;
@@ -82,23 +74,25 @@ public class ScadaController implements Initializable{
 	}
 	public void actionPinceTube()	
 	{
-		setOnOff(VariableAuto.bouchonner);
+		setOnOff(VariableAuto.actionPinces);
 	}
 	public void bouchonner()
 	{
-		setOnOff(VariableAuto.actionPinces);
+		setOnOff(VariableAuto.bouchonner);
 	}
 	public void refreshAll()
 	{
-		
 		//----------------------------- automate bales-------------------------------------
-		setColorCircle(automLecture.getVar(VariableAuto.capteurPresence), capteur_tube);
+		setColorCircle(automLecture.getVar(VariableAuto.presenceTubeBalle), capteur_tube);
 		setColorCircle(automLecture.getVar(VariableAuto.actionneurChuteHaut), actionneurHaut);
 		setColorCircle(automLecture.getVar(VariableAuto.actionneurChuteBas), actionneurBas);
 		setColorCircle(automLecture.getVar(VariableAuto.moteurBalle), moteurBalle);
 		setColorCircle(automLecture.getVar(VariableAuto.running), isRunning);
 		setColorCircle(automLecture.getVar(VariableAuto.tournerPlateau), isTurning);
-		
+		setColorCircle(automLecture.getVar(VariableAuto.presenceTubeBouchons), presence_tube_bouchons);
+		setColorCircle(automLecture.getVar(VariableAuto.capteurBouchons), stock_bouchon);
+		setColorCircle(automLecture.getVar(VariableAuto.stock_tube), tube_en_stock);
+
 	}
 	
 	private void setOnOff(VariableAuto var){
@@ -134,7 +128,6 @@ public class ScadaController implements Initializable{
 	@FXML private Button FaireTournerPlateau;	
 	@FXML private Button ActionPinceTube;
 	@FXML private Button back;
-	//@FXML private Button startAutomate;
 	@FXML private Button bouchonner;
 	
 	@FXML public void Bouchonner(ActionEvent event){
@@ -177,7 +170,7 @@ public class ScadaController implements Initializable{
 	@FXML public void MettreTube(ActionEvent event)
 	{
 		System.out.println("prevenir werner !");
-}
+	}
 	@FXML public void TournerPlateau(ActionEvent event)
 	{
 		if(automLecture.getVar(VariableAuto.running)==0 || automLecture.getVar(VariableAuto.running)==-1)
@@ -190,5 +183,4 @@ public class ScadaController implements Initializable{
 		actionPinceTube();
 		else System.out.println("l'automate est en train de tourner ! Arrêtez le d'abord");
 	}
-	
 }
