@@ -260,4 +260,28 @@ public class Grafcet {
 		// TODO
 	}
 
+	public boolean isBouchage() {
+		// TODO
+		return false;
+	}
+
+	public boolean isPresence_bouchon() {
+		// TODO
+		return false;
+	}
+
+	public boolean isPresence_tube_bouchage() {
+		// TODO
+		return false;
+	}
+
+	public boolean isPresence_tube_pinces() {
+		// TODO
+		return false;
+	}
+
+	public boolean isPincage() {
+		// TODO
+		return false;
+	}
 }
