@@ -8,7 +8,7 @@ public class ConvertisseurModbus {
 	
 	public ConvertisseurModbus(){
 		master = new MasterModbus();
-		adresseRasp1 = "127.0.1.1:4444";
+		adresseRasp1 = "127.0.0.1:4444";
 	}
 	
 	public String convModbus(String msg) {
