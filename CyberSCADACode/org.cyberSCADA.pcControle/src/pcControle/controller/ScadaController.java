@@ -177,7 +177,7 @@ public class ScadaController implements Initializable{
 	}
 	@FXML public void MettreTube(ActionEvent event)
 	{
-		System.out.println("Werner, mets un tube !!!");
+		System.out.println("prevenir werner !");
 	}
 	@FXML public void TournerPlateau(ActionEvent event)
 	{

@@ -7,7 +7,7 @@ public class Right {
 
 	
 	private VariableAuto nomVar;
-	private boolean mode; // 0, lecture ; 1, ecriture
+	private boolean mode; // 0: lecture ; 1: ecriture
 	private Role role;
 	
 	public Right(VariableAuto nomVar, boolean mode, Role role) {

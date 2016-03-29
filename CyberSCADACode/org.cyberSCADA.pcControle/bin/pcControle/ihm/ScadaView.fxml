@@ -30,7 +30,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="727.0" layoutY="35.0" prefHeight="31.0" prefWidth="174.0" text="Automate Bales">
+      <Label alignment="CENTER" layoutX="727.0" layoutY="35.0" prefHeight="31.0" prefWidth="174.0" text="Automate Balles">
          <font>
             <Font name="Arial Black" size="14.0" />
          </font>
@@ -94,7 +94,7 @@
       <Button fx:id="Actionneur_Bas" layoutX="939.0" layoutY="143.0" mnemonicParsing="false" onAction="#actionneurBas" prefHeight="37.0" prefWidth="113.0" text="Ac bas" />
       <Button fx:id="moteurBalleB" layoutX="939.0" layoutY="210.0" mnemonicParsing="false" onAction="#moteurBalle" prefHeight="37.0" prefWidth="113.0" text="Moteur Balle" />
       <Button fx:id="remplirTubeB" layoutX="1100.0" layoutY="143.0" mnemonicParsing="false" onAction="#remplirTube" prefHeight="37.0" prefWidth="113.0" text="Remplir Tube" />
-      <Button fx:id="FaireTournerPlateau" layoutX="1100.0" layoutY="210.0" mnemonicParsing="false" onAction="#TournerPlateau" prefHeight="37.0" prefWidth="137.0" text="Faire tourner plateau" />
+      <Button fx:id="FaireTournerPlateau" layoutX="1100.0" layoutY="210.0" mnemonicParsing="false" onAction="#TournerPlateau" prefHeight="37.0" prefWidth="113.0" text="Tourner" />
       <Circle fx:id="example_etat_vide" fill="YELLOW" layoutX="33.0" layoutY="646.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="exemple_etat_erreur" fill="RED" layoutX="33.0" layoutY="666.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="example_etat_bon" fill="BLUE" layoutX="33.0" layoutY="626.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
