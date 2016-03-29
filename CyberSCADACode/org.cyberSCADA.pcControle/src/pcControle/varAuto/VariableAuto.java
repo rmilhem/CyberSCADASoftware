@@ -1,5 +1,5 @@
 package pcControle.varAuto;
 
 public enum VariableAuto {
-	capteurPresence, actionneurChuteHaut, actionneurChuteBas, moteurBalle, running, remplissage, tournerPlateau, bouchonner, actionPinces
+	capteurPresence, presenceTubeBouchons, capteurBouchons, actionneurChuteHaut, actionneurChuteBas, moteurBalle, running, remplissage, tournerPlateau, bouchonner, actionPinces
 }
