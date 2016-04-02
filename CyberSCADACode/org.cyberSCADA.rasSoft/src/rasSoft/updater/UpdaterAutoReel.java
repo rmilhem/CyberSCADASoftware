@@ -54,7 +54,7 @@ public class UpdaterAutoReel implements UpdaterAuto {
 		} if (numAutomate == 3) {
 			// actions pinces
 			threadPrincipal.getGrafcet()
-					.setPinces(ModbusCoupler.getReference().getProcessImage().getDigitalOut(12));
+					.setPinces(ModbusCoupler.getReference().getProcessImage().getDigitalOut(12).isSet());
 		}
 		// on remet le flag à false
 		ModbusCoupler.getReference().getProcessImage().getDigitalOut(0).set(false);
