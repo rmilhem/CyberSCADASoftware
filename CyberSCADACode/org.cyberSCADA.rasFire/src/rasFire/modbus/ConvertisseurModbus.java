@@ -5,10 +5,14 @@ import rasFire.varAuto.VariableAuto;
 public class ConvertisseurModbus {
 	MasterModbus master;
 	String adresseRasp1;
+	String adresseRasp2;
+	String adresseRasp3;
 	
 	public ConvertisseurModbus(){
 		master = new MasterModbus();
 		adresseRasp1 = "127.0.1.1:4444";
+		adresseRasp2 = "127.0.1.1:4442";
+		adresseRasp3 = "127.0.1.1:4443";
 	}
 	
 	public String convModbus(String msg) {
@@ -52,7 +56,7 @@ public class ConvertisseurModbus {
 		// (à synthetiser)
 		String[] retour = new String[2];
 		switch (variable) {
-		case capteurPresence:
+		case presenceTubeBalle:
 			retour[0] = adresseRasp1;
 			retour[1] = "0";
 			break;
@@ -68,15 +72,39 @@ public class ConvertisseurModbus {
 			retour[0] = adresseRasp1;
 			retour[1] = "3";
 			break;
-		case running:
+		case remplissage:
 			retour[0] = adresseRasp1;
 			retour[1] = "4";
 			break;
-		case remplissage:
+		case running:
 			retour[0] = adresseRasp1;
 			retour[1] = "5";
 			break;
 		case tournerPlateau:
+			retour[0] = adresseRasp1;
+			retour[1] = "6";
+			break;
+		case bouchonner:
+			retour[0] = adresseRasp1;
+			retour[1] = "7";
+			break;
+		case capteurBouchons:
+			retour[0] = adresseRasp1;
+			retour[1] = "8";
+			break;
+		case presenceTubeBouchons:
+			retour[0] = adresseRasp1;
+			retour[1] = "9";
+			break;
+		case capteurPresence:
+			retour[0] = adresseRasp1;
+			retour[1] = "10";
+			break;
+		case actionPinces:
+			retour[0] = adresseRasp1;
+			retour[1] = "11";
+			break;
+		case stock_tube:
 			retour[0] = adresseRasp1;
 			retour[1] = "6";
 			break;
@@ -99,8 +127,11 @@ public class ConvertisseurModbus {
 	private String lireValeur(boolean registre, String adresse, String reference) {
 		
 
-			if (!registre && !adresse.equals(""))
+			if (!registre && !adresse.equals("")){
+				
+				System.out.println(reference);
 				return master.ReadCoil(adresse, reference, "1");
+			}
 			if (registre && !adresse.equals(""))
 				return  master.ReadRegister(adresse, reference, "1");
 
