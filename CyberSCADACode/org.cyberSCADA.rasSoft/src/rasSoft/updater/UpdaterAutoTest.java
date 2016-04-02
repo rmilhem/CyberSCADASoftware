@@ -51,10 +51,14 @@ public class UpdaterAutoTest implements UpdaterAuto {
 			// lecture des registres
 			regTemp = automPhy.getReg(0);
 			// écriture dans automate virtuel
-			if (regTemp != -1)
-				ModbusCoupler.getReference().getProcessImage().getRegister(0).setValue(regTemp);
+			//if (regTemp != -1)
+				//ModbusCoupler.getReference().getProcessImage().getRegister(0).setValue(regTemp);
 		}
 
+	}
+	
+	public AutomPhy getAutomPhy(){
+		return automPhy;
 	}
 
 }

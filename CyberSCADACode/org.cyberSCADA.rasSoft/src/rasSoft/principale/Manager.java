@@ -14,7 +14,7 @@ public class Manager {
 	AutomPhy automPhy;
 	int numAutomate;
 	UpdaterAuto updater;
-	ThreadPrincipal threadPrincipal = new ThreadPrincipal();
+	ThreadPrincipal threadPrincipal;
 	
 	public Manager(int numAutomate, boolean virtuel){
 		this.numAutomate = numAutomate;
@@ -22,6 +22,7 @@ public class Manager {
 			updater = new UpdaterAutoTest(numAutomate, false);
 		}
 		else{
+			threadPrincipal = new ThreadPrincipal();
 			updater = new UpdaterAutoReel();
 		}
 		SpiBuilder spiBuilder = new SpiBuilder();
@@ -30,9 +31,12 @@ public class Manager {
 		
 		spiBuilder.build(spi);
 		
+		automPhy = updater.getAutomPhy();
+		
 	}
 
 	public void update(){
+		
 		
 		boolean flag = ModbusCoupler.getReference().getProcessImage().getDigitalOut(0).isSet();
 		// si le flag n'est pas mis, tous les chgts venant du pc-control ont été pris en compte.
@@ -62,7 +66,7 @@ public class Manager {
 			System.out.println("Moteur Balle: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(4).isSet());
 			System.out.println("Running : "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(5).isSet());
 			System.out.println("Turning : "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(7).isSet());
-			System.out.println("registre (inutilisé): "+  ModbusCoupler.getReference().getProcessImage().getRegister(0).getValue());
+			//System.out.println("registre (inutilisé): "+  ModbusCoupler.getReference().getProcessImage().getRegister(0).getValue());
 			
 		}
 		System.out.println("---------------Automate virtuel (fin) -------------------");

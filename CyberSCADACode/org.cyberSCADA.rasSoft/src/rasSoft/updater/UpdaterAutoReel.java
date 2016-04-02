@@ -3,6 +3,7 @@ package rasSoft.updater;
 import net.wimpi.modbus.ModbusCoupler;
 import net.wimpi.modbus.procimg.SimpleDigitalOut;
 import rasSoft.principale.ThreadPrincipal;
+import rasSoft.test.AutomPhy;
 
 public class UpdaterAutoReel implements UpdaterAuto {
 
@@ -96,6 +97,12 @@ public class UpdaterAutoReel implements UpdaterAuto {
 			ModbusCoupler.getReference().getProcessImage().getDigitalOut(12).set(threadPrincipal.getGrafcet().isPincage());
 		}
 
+	}
+
+	@Override
+	public AutomPhy getAutomPhy() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

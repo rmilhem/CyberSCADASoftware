@@ -120,6 +120,8 @@ public class AutomPhy {
 	public int getNum(){
 		return numAut;
 	}
+	
+
 	public static void main (String args[]) {
 		AutomPhy a = new AutomPhy(1, false);
 		// System.out.println("All is alright 1");

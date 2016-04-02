@@ -45,6 +45,7 @@ public class MainFire {
 				} else {
 					// System.out.println("Message venant du PC-Control
 					// FILTRE");
+					com.sendMessage("");
 				}
 			
 			
