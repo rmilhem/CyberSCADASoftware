@@ -16,43 +16,43 @@ public class SpiBuilder {
 
 				if(numAutomate == 1){
 
-					// presence tube remplissage 0
+					// presence tube remplissage 1
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
 					// Actionneur chute
-					// haut :1
+					// haut :2
 					spi.addDigitalOut(new SimpleDigitalOut(false));
-					// bas : 2
-					spi.addDigitalOut(new SimpleDigitalOut(false));
-
-					// Moteur Balle 3
+					// bas : 3
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// remplirTube 4
+					// Moteur Balle 4
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// Running 5
+					// remplirTube 5
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// Tourner Plateau 6
+					// Running 6
+					spi.addDigitalOut(new SimpleDigitalOut(false));
+
+					// Tourner Plateau 7
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
 				//} if (numAutomate == 2) {
-					// bouchonner 7
+					// bouchonner 8
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// presence bouchon 8
+					// presence bouchon 9
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// presence tube bouchage 9
+					// presence tube bouchage 10
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
 				//} if (numAutomate == 3) {
 
-					// presence tube pinces 10
+					// presence tube pinces 11
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// actionPinces 11
+					// actionPinces 12
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 				
 

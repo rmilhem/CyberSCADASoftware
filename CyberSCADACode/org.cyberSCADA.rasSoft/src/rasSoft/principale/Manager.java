@@ -64,7 +64,7 @@ public class Manager {
 			System.out.println("Actionneur chute Haut: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(2).isSet());
 			System.out.println("Actionneur chute Bas: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(3).isSet());
 			System.out.println("Moteur Balle: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(4).isSet());
-			System.out.println("Running : "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(5).isSet());
+			System.out.println("Running : "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(6).isSet());
 			System.out.println("Turning : "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(7).isSet());
 			//System.out.println("registre (inutilisé): "+  ModbusCoupler.getReference().getProcessImage().getRegister(0).getValue());
 			

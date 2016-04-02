@@ -104,7 +104,7 @@ public class AutomPhy {
 			res += "Capteur presence : "+coil[0]+"\n";
 			res += "Actionneur chute haut : "+coil[1]+"\n";
 			res += "Actionneur chute bas : "+coil[2]+"\n";
-			res += "(ancien)Nombre de balles : "+reg[0];
+			res += "(ancien)Nombre de balles : "+reg[0]+"\n";
 		} else if (numAut == 3) {
 			res += "Capteur presence : "+coil[0]+"\n";
 			res += "Actionneur ventouse : "+coil[1]+"\n";
