@@ -54,14 +54,14 @@ public class SpiBuilder {
 
 					// actionPinces 11
 					spi.addDigitalOut(new SimpleDigitalOut(false));
-				}
+				
 
 					// est ce utile ?
 					spi.addRegister(new SimpleRegister(0));
 				}
 				  //3. Set the image on the coupler
-				  // Attention ici ModbusCoupler crée une copie de spi !!!
-				  // on utilisera donc par la suite ModbusCoupler.getReference().getProcessImage() plutôt que spi
+				  // Attention ici ModbusCoupler crï¿½e une copie de spi !!!
+				  // on utilisera donc par la suite ModbusCoupler.getReference().getProcessImage() plutï¿½t que spi
 				  ModbusCoupler.getReference().setProcessImage(spi);
 				  ModbusCoupler.getReference().setMaster(false);
 				  //ModbusCoupler.getReference().setUnitID(15);
