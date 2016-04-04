@@ -128,8 +128,6 @@ public class ConvertisseurModbus {
 		
 
 			if (!registre && !adresse.equals("")){
-				
-				System.out.println(reference);
 				return master.ReadCoil(adresse, reference, "1");
 			}
 			if (registre && !adresse.equals(""))

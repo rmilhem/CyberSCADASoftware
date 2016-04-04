@@ -19,7 +19,7 @@ public class Manager {
 	public Manager(int numAutomate, boolean virtuel){
 		this.numAutomate = numAutomate;
 		if(virtuel){
-			updater = new UpdaterAutoTest(numAutomate, false);
+			updater = new UpdaterAutoTest(numAutomate, true);
 		}
 		else{
 			threadPrincipal = new ThreadPrincipal();
