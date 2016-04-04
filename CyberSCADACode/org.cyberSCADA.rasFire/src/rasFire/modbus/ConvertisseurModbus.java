@@ -10,7 +10,7 @@ public class ConvertisseurModbus {
 	
 	public ConvertisseurModbus(){
 		master = new MasterModbus();
-		adresseRasp1 = "127.0.1.1:4444";
+		adresseRasp1 = "127.0.1.1:4441";
 		adresseRasp2 = "127.0.1.1:4442";
 		adresseRasp3 = "127.0.1.1:4443";
 	}
@@ -53,7 +53,7 @@ public class ConvertisseurModbus {
 	 * @return adresse et référence et change la valeur de registre
 	 */
 	private String[] getEquivalence(VariableAuto variable, Boolean registre) {
-		// (à synthetiser)
+		// (à synthetiser) décalage de 1 a cause du flag
 		String[] retour = new String[2];
 		switch (variable) {
 		case presenceTubeBalle:
@@ -85,28 +85,28 @@ public class ConvertisseurModbus {
 			retour[1] = "6";
 			break;
 		case bouchonner:
-			retour[0] = adresseRasp1;
-			retour[1] = "7";
+			retour[0] = adresseRasp2;
+			retour[1] = "0";
 			break;
 		case capteurBouchons:
-			retour[0] = adresseRasp1;
-			retour[1] = "8";
+			retour[0] = adresseRasp2;
+			retour[1] = "1";
 			break;
 		case presenceTubeBouchons:
-			retour[0] = adresseRasp1;
-			retour[1] = "9";
+			retour[0] = adresseRasp2;
+			retour[1] = "2";
 			break;
 		case capteurPresence:
-			retour[0] = adresseRasp1;
-			retour[1] = "10";
+			retour[0] = adresseRasp3;
+			retour[1] = "0";
 			break;
 		case actionPinces:
-			retour[0] = adresseRasp1;
-			retour[1] = "11";
+			retour[0] = adresseRasp3;
+			retour[1] = "1";
 			break;
 		case stock_tube:
-			retour[0] = adresseRasp1;
-			retour[1] = "6";
+			retour[0] = adresseRasp3;
+			retour[1] = "0";
 			break;
 		/*case "3":
 			retour[0] = adresseRasp1;
@@ -162,6 +162,7 @@ public class ConvertisseurModbus {
 					if(reponse.substring(taille-2, taille-2).equals("0"))
 					reponse = reponse.substring(taille-1, taille-1);
 					else reponse = reponse.substring(taille-2, taille-1);
+					//System.out.println(variable+" "+reponse);
 					return (variable+" "+reponse);
 				}
 				return "";

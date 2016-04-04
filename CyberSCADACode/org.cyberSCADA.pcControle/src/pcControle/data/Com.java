@@ -89,6 +89,7 @@ public class Com {
 				try {
 					
 					msgRecu = reader.readLine();
+					//System.out.println(msgRecu);
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

@@ -37,22 +37,22 @@ public class SpiBuilder {
 					// Tourner Plateau 7
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-				//} if (numAutomate == 2) {
-					// bouchonner 8
+				} if (numAutomate == 2) {
+					// bouchonner 1
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// presence bouchon 9
+					// presence bouchon 2
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// presence tube bouchage 10
+					// presence tube bouchage 3
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-				//} if (numAutomate == 3) {
+				} if (numAutomate == 3) {
 
-					// presence tube pinces 11
+					// presence tube pinces 1
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// actionPinces 12
+					// actionPinces 2
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 				
 
