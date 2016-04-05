@@ -14,14 +14,16 @@ public class Manager {
 	AutomPhy automPhy;
 	int numAutomate;
 	UpdaterAuto updater;
-	ThreadPrincipal threadPrincipal = new ThreadPrincipal();
+
+	ThreadPrincipal threadPrincipal;
 
 	public Manager(int numAutomate, boolean virtuel){
 		this.numAutomate = numAutomate;
 		if(virtuel){
-			updater = new UpdaterAutoTest(numAutomate, false);
+			updater = new UpdaterAutoTest(numAutomate, true);
 		}
 		else{
+			threadPrincipal = new ThreadPrincipal();
 			updater = new UpdaterAutoReel();
 		}
 		SpiBuilder spiBuilder = new SpiBuilder();
@@ -30,9 +32,13 @@ public class Manager {
 
 		spiBuilder.build(spi);
 
+
+		automPhy = updater.getAutomPhy();
+
 	}
 
 	public void update(){
+
 
 		boolean flag = ModbusCoupler.getReference().getProcessImage().getDigitalOut(0).isSet();
 		// si le flag n'est pas mis, tous les chgts venant du pc-control ont été pris en compte.
@@ -60,12 +66,23 @@ public class Manager {
 			System.out.println("Actionneur chute Haut: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(2).isSet());
 			System.out.println("Actionneur chute Bas: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(3).isSet());
 			System.out.println("Moteur Balle: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(4).isSet());
-			System.out.println("Running : "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(5).isSet());
+			System.out.println("Running : "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(6).isSet());
 			System.out.println("Turning : "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(7).isSet());
-			System.out.println("Bouchage : "+ ModbusCoupler.getReference().getProcessImage().getDigitalOut(8).isSet());
-			System.out.println("Pinces : "+ ModbusCoupler.getReference().getProcessImage().getDigitalOut(9).isSet());
-			System.out.println("registre (inutilisé): "+  ModbusCoupler.getReference().getProcessImage().getRegister(0).getValue());
+			//System.out.println("registre (inutilisé): "+  ModbusCoupler.getReference().getProcessImage().getRegister(0).getValue());
 
+		}
+		else if(numAutomate == 2){
+			System.out.println("Bouchonner: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(1).isSet());
+			System.out.println("presence bouchon: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(2).isSet());
+			System.out.println("presence tube bouchage: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(3).isSet());
+			//System.out.println("registre (inutilisé): "+  ModbusCoupler.getReference().getProcessImage().getRegister(0).getValue());
+
+		}
+		if(numAutomate == 3){
+			System.out.println("presence tube pince: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(1).isSet());
+			System.out.println("action pinces: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(2).isSet());
+			//System.out.println("registre (inutilisé): "+  ModbusCoupler.getReference().getProcessImage().getRegister(0).getValue());
+			
 		}
 		System.out.println("---------------Automate virtuel (fin) -------------------");
 	}

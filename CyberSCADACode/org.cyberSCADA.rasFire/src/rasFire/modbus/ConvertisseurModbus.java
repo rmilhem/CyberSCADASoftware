@@ -5,10 +5,14 @@ import rasFire.varAuto.VariableAuto;
 public class ConvertisseurModbus {
 	MasterModbus master;
 	String adresseRasp1;
+	String adresseRasp2;
+	String adresseRasp3;
 	
 	public ConvertisseurModbus(){
 		master = new MasterModbus();
-		adresseRasp1 = "127.0.0.1:4444";
+		adresseRasp1 = "127.0.1.1:4441";
+		adresseRasp2 = "127.0.1.1:4442";
+		adresseRasp3 = "127.0.1.1:4443";
 	}
 	
 	public String convModbus(String msg) {
@@ -49,10 +53,10 @@ public class ConvertisseurModbus {
 	 * @return adresse et référence et change la valeur de registre
 	 */
 	private String[] getEquivalence(VariableAuto variable, Boolean registre) {
-		// (à synthetiser)
+		// (à synthetiser) décalage de 1 a cause du flag
 		String[] retour = new String[2];
 		switch (variable) {
-		case capteurPresence:
+		case presenceTubeBalle:
 			retour[0] = adresseRasp1;
 			retour[1] = "0";
 			break;
@@ -68,17 +72,41 @@ public class ConvertisseurModbus {
 			retour[0] = adresseRasp1;
 			retour[1] = "3";
 			break;
-		case running:
+		case remplissage:
 			retour[0] = adresseRasp1;
 			retour[1] = "4";
 			break;
-		case remplissage:
+		case running:
 			retour[0] = adresseRasp1;
 			retour[1] = "5";
 			break;
 		case tournerPlateau:
 			retour[0] = adresseRasp1;
 			retour[1] = "6";
+			break;
+		case bouchonner:
+			retour[0] = adresseRasp2;
+			retour[1] = "0";
+			break;
+		case capteurBouchons:
+			retour[0] = adresseRasp2;
+			retour[1] = "1";
+			break;
+		case presenceTubeBouchons:
+			retour[0] = adresseRasp2;
+			retour[1] = "2";
+			break;
+		case capteurPresence:
+			retour[0] = adresseRasp3;
+			retour[1] = "0";
+			break;
+		case actionPinces:
+			retour[0] = adresseRasp3;
+			retour[1] = "1";
+			break;
+		case stock_tube:
+			retour[0] = adresseRasp3;
+			retour[1] = "0";
 			break;
 		/*case "3":
 			retour[0] = adresseRasp1;
@@ -99,8 +127,9 @@ public class ConvertisseurModbus {
 	private String lireValeur(boolean registre, String adresse, String reference) {
 		
 
-			if (!registre && !adresse.equals(""))
+			if (!registre && !adresse.equals("")){
 				return master.ReadCoil(adresse, reference, "1");
+			}
 			if (registre && !adresse.equals(""))
 				return  master.ReadRegister(adresse, reference, "1");
 
@@ -133,6 +162,7 @@ public class ConvertisseurModbus {
 					if(reponse.substring(taille-2, taille-2).equals("0"))
 					reponse = reponse.substring(taille-1, taille-1);
 					else reponse = reponse.substring(taille-2, taille-1);
+					//System.out.println(variable+" "+reponse);
 					return (variable+" "+reponse);
 				}
 				return "";

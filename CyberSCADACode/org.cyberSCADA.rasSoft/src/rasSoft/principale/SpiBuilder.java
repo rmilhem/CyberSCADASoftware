@@ -16,52 +16,52 @@ public class SpiBuilder {
 
 				if(numAutomate == 1){
 
-					// presence tube remplissage 0
+					// presence tube remplissage 1
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
 					// Actionneur chute
-					// haut :1
+					// haut :2
 					spi.addDigitalOut(new SimpleDigitalOut(false));
-					// bas : 2
-					spi.addDigitalOut(new SimpleDigitalOut(false));
-
-					// Moteur Balle 3
+					// bas : 3
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// remplirTube 4
+					// Moteur Balle 4
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// Running 5
+					// remplirTube 5
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// Tourner Plateau 6
+					// Running 6
+					spi.addDigitalOut(new SimpleDigitalOut(false));
+
+					// Tourner Plateau 7
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
 				} if (numAutomate == 2) {
-					// bouchonner 7
+					// bouchonner 1
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// presence bouchon 8
+					// presence bouchon 2
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// presence tube bouchage 9
+					// presence tube bouchage 3
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
 				} if (numAutomate == 3) {
 
-					// presence tube pinces 10
+					// presence tube pinces 1
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// actionPinces 11
+					// actionPinces 2
 					spi.addDigitalOut(new SimpleDigitalOut(false));
-				}
+				
 
 					// est ce utile ?
 					spi.addRegister(new SimpleRegister(0));
 				}
 				  //3. Set the image on the coupler
-				  // Attention ici ModbusCoupler crée une copie de spi !!!
-				  // on utilisera donc par la suite ModbusCoupler.getReference().getProcessImage() plutôt que spi
+				  // Attention ici ModbusCoupler crï¿½e une copie de spi !!!
+				  // on utilisera donc par la suite ModbusCoupler.getReference().getProcessImage() plutï¿½t que spi
 				  ModbusCoupler.getReference().setProcessImage(spi);
 				  ModbusCoupler.getReference().setMaster(false);
 				  //ModbusCoupler.getReference().setUnitID(15);

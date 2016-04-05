@@ -24,12 +24,18 @@ public class Firewall {
 		ruleBase.addRule(true, VariableAuto.tournerPlateau);
 		// les droits en lecture
 		ruleBase.addRule(false, VariableAuto.capteurPresence);
+		ruleBase.addRule(false, VariableAuto.presenceTubeBalle);
 		ruleBase.addRule(false, VariableAuto.actionneurChuteHaut);
 		ruleBase.addRule(false, VariableAuto.actionneurChuteBas);
 		ruleBase.addRule(false, VariableAuto.moteurBalle);
+		ruleBase.addRule(false, VariableAuto.capteurBouchons);
+		ruleBase.addRule(false, VariableAuto.stock_tube);
+		ruleBase.addRule(false, VariableAuto.presenceTubeBouchons);
 		ruleBase.addRule(false, VariableAuto.running);
 		ruleBase.addRule(false, VariableAuto.remplissage);
 		ruleBase.addRule(false, VariableAuto.tournerPlateau);
+		ruleBase.addRule(false, VariableAuto.bouchonner);
+		ruleBase.addRule(false, VariableAuto.actionPinces);
 	}
 
 	// renvoie si le message a été filtré ou non

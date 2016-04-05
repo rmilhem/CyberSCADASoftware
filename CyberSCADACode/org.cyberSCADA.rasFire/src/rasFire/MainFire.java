@@ -39,12 +39,12 @@ public class MainFire {
 					System.out.println("Un Pc-Control s'est déconnecté");
 				}
 				if (msgRecuServeur != null && !firewall.filtrer(msgRecuServeur)) {
-					// System.out.println("message non filtré");
 					msgRecuRap = firewall.convModbus(msgRecuServeur);
+					//System.out.println("message non filtré : "+msgRecuServeur+" : " +msgRecuRap);
 					com.sendMessage(msgRecuRap);
 				} else {
-					// System.out.println("Message venant du PC-Control
-					// FILTRE");
+					 //System.out.println("Message venant du PC-Control FILTRE");
+					com.sendMessage("");
 				}
 			
 			

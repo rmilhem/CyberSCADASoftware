@@ -15,7 +15,23 @@ public class UpdaterAutoTest implements UpdaterAuto {
 	@Override
 	public void miseAJourAutomatePhy(int numAutomate, ThreadPrincipal threadPrincipal) {
 		if(automPhy.getNum() == 1){
-			for(int i =0; i<6; i++){	
+			for(int i =0; i<7; i++){	
+				automPhy.setCoil(i, ModbusCoupler.getReference().getProcessImage().getDigitalOut(i+1).isSet());	
+				// cas particulier
+				if(true);
+				}
+			automPhy.setReg(0,ModbusCoupler.getReference().getProcessImage().getRegister(0).getValue());
+		}
+		else if(automPhy.getNum() == 2){
+			for(int i =0; i<3; i++){	
+				automPhy.setCoil(i, ModbusCoupler.getReference().getProcessImage().getDigitalOut(i+1).isSet());	
+				// cas particulier
+				if(true);
+				}
+			automPhy.setReg(0,ModbusCoupler.getReference().getProcessImage().getRegister(0).getValue());
+		}
+		else if(automPhy.getNum() == 3){
+			for(int i =0; i<2; i++){	
 				automPhy.setCoil(i, ModbusCoupler.getReference().getProcessImage().getDigitalOut(i+1).isSet());	
 				// cas particulier
 				if(true);
@@ -40,7 +56,7 @@ public class UpdaterAutoTest implements UpdaterAuto {
 		if (automPhy.getNum() == 1) {
 			// lecture des variables de l'automate physique virtuel
 			// lecture des coils
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 7; i++) {
 				retour = automPhy.getCoil(i);
 				if (retour[0]) {
 					coilTemp = retour[1];
@@ -51,10 +67,48 @@ public class UpdaterAutoTest implements UpdaterAuto {
 			// lecture des registres
 			regTemp = automPhy.getReg(0);
 			// écriture dans automate virtuel
-			if (regTemp != -1)
-				ModbusCoupler.getReference().getProcessImage().getRegister(0).setValue(regTemp);
+			//if (regTemp != -1)
+				//ModbusCoupler.getReference().getProcessImage().getRegister(0).setValue(regTemp);
+		}
+		else if (automPhy.getNum() == 2) {
+			// lecture des variables de l'automate physique virtuel
+			// lecture des coils
+			for (int i = 0; i < 3; i++) {
+				retour = automPhy.getCoil(i);
+				if (retour[0]) {
+					coilTemp = retour[1];
+					// écriture dans automate virtuel
+					ModbusCoupler.getReference().getProcessImage().getDigitalOut(i + 1).set(coilTemp);
+				}
+			}
+			// lecture des registres
+			//regTemp = automPhy.getReg(0);
+			// écriture dans automate virtuel
+			//if (regTemp != -1)
+				//ModbusCoupler.getReference().getProcessImage().getRegister(0).setValue(regTemp);
+		}
+		if (automPhy.getNum() == 3) {
+			// lecture des variables de l'automate physique virtuel
+			// lecture des coils
+			for (int i = 0; i < 2; i++) {
+				retour = automPhy.getCoil(i);
+				if (retour[0]) {
+					coilTemp = retour[1];
+					// écriture dans automate virtuel
+					ModbusCoupler.getReference().getProcessImage().getDigitalOut(i + 1).set(coilTemp);
+				}
+			}
+			// lecture des registres
+			//regTemp = automPhy.getReg(0);
+			// écriture dans automate virtuel
+			//if (regTemp != -1)
+				//ModbusCoupler.getReference().getProcessImage().getRegister(0).setValue(regTemp);
 		}
 
+	}
+	
+	public AutomPhy getAutomPhy(){
+		return automPhy;
 	}
 
 }
