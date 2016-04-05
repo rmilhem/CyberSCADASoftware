@@ -72,15 +72,13 @@ public class Manager {
 
 		}
 		else if(numAutomate == 2){
-			System.out.println("Bouchonner: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(1).isSet());
-			System.out.println("presence bouchon: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(2).isSet());
-			System.out.println("presence tube bouchage: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(3).isSet());
+			System.out.println("presence bouchon: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(1).isSet());
+			System.out.println("presence tube bouchage: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(2).isSet());
 			//System.out.println("registre (inutilisé): "+  ModbusCoupler.getReference().getProcessImage().getRegister(0).getValue());
 
 		}
 		if(numAutomate == 3){
 			System.out.println("presence tube pince: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(1).isSet());
-			System.out.println("action pinces: "+  ModbusCoupler.getReference().getProcessImage().getDigitalOut(2).isSet());
 			//System.out.println("registre (inutilisé): "+  ModbusCoupler.getReference().getProcessImage().getRegister(0).getValue());
 			
 		}

@@ -38,13 +38,11 @@ public class SpiBuilder {
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
 				} if (numAutomate == 2) {
-					// bouchonner 1
+					
+					// presence bouchon 1
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// presence bouchon 2
-					spi.addDigitalOut(new SimpleDigitalOut(false));
-
-					// presence tube bouchage 3
+					// presence tube bouchage 2
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
 				} if (numAutomate == 3) {
@@ -52,8 +50,6 @@ public class SpiBuilder {
 					// presence tube pinces 1
 					spi.addDigitalOut(new SimpleDigitalOut(false));
 
-					// actionPinces 2
-					spi.addDigitalOut(new SimpleDigitalOut(false));
 				
 
 					// est ce utile ?
