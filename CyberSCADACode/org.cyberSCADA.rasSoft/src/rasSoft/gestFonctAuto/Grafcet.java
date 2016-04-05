@@ -227,61 +227,66 @@ public class Grafcet {
 	}
 
 	public boolean isActionneurHaut() {
-		// TODO Auto-generated method stub
-		return false;
+		if(m.ReadCoil("21","1","1").equals("1")){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
 	}
 
 	public void setActionneurHaut(boolean b) {
-		// TODO Auto-generated method stub
-
+		m.WriteCoil("105", b, "1");
 	}
 
 	public boolean isActionneurBas() {
-		// TODO Auto-generated method stub
-		return false;
+		if(m.ReadCoil("20","1","1").equals("1")){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public void setActionneurBas(boolean b) {
-		// TODO Auto-generated method stub
-
+		m.WriteCoil("106", b, "1");
 	}
 
 	public boolean isMoteurBalle() {
-		// TODO Auto-generated method stub
-		return false;
+		if(m.ReadCoil("22","1","1").equals("1")){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public void setMoteurBalle(boolean b) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setPinces(boolean b) {
-		// TODO
-	}
-
-	public boolean isBouchage() {
-		// TODO
-		return false;
+		m.WriteCoil("107", b, "1");
 	}
 
 	public boolean isPresence_bouchon() {
-		// TODO
-		return false;
+		if(m.ReadCoil("23","1","1").equals("1")){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public boolean isPresence_tube_bouchage() {
-		// TODO
-		return false;
+		if(m.ReadCoil("24","1","1").equals("1")){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
-	public boolean isPresence_tube_pinces() {
-		// TODO
-		return false;
-	}
-
-	public boolean isPincage() {
-		// TODO
-		return false;
-	}
 }

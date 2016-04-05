@@ -55,7 +55,7 @@ public class UpdaterAutoReel implements UpdaterAuto {
 		} if (numAutomate == 3) {
 			// actions pinces
 			threadPrincipal.getGrafcet()
-					.setPinces(ModbusCoupler.getReference().getProcessImage().getDigitalOut(2).isSet());
+					.setDepart_transfert(ModbusCoupler.getReference().getProcessImage().getDigitalOut(2).isSet());
 		}
 		// on remet le flag à false
 		ModbusCoupler.getReference().getProcessImage().getDigitalOut(0).set(false);
@@ -85,16 +85,14 @@ public class UpdaterAutoReel implements UpdaterAuto {
 
 		} if (numAutomate == 2) {
 			// bouchonner
-			ModbusCoupler.getReference().getProcessImage().getDigitalOut(1).set(threadPrincipal.getGrafcet().isBouchage());
+			//ModbusCoupler.getReference().getProcessImage().getDigitalOut(1).set(threadPrincipal.getGrafcet().isBouchage());
 			// presence bouchon
 			ModbusCoupler.getReference().getProcessImage().getDigitalOut(2).set(threadPrincipal.getGrafcet().isPresence_bouchon());
 			// presence tube bouchage
 			ModbusCoupler.getReference().getProcessImage().getDigitalOut(3).set(threadPrincipal.getGrafcet().isPresence_tube_bouchage());
 		} if (numAutomate == 3) {
 			// presence tube pinces
-			ModbusCoupler.getReference().getProcessImage().getDigitalOut(1).set(threadPrincipal.getGrafcet().isPresence_tube_pinces());
-			// pinces
-			ModbusCoupler.getReference().getProcessImage().getDigitalOut(2).set(threadPrincipal.getGrafcet().isPincage());
+			ModbusCoupler.getReference().getProcessImage().getDigitalOut(1).set(threadPrincipal.getGrafcet().isPresence_tube());
 		}
 
 	}

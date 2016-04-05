@@ -49,6 +49,8 @@ public class MasterModbus {
 	 * 3 : SimpleRegister
 	 */
 	
+	
+	
 	public MasterModbus(String a)
 	{
 		try {
@@ -72,7 +74,7 @@ public class MasterModbus {
 
 	public static void main(String[] args) {
 
-		MasterModbus m = new MasterModbus("127.0.1.1:4444");
+		MasterModbus m = new MasterModbus("172.20.25.41:502");
 		
 		boolean b[] = new boolean[2];
 		b[0] = false;b[1] = true;

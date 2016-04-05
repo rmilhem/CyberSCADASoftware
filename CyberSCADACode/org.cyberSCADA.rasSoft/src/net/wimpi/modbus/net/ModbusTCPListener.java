@@ -59,8 +59,8 @@ public class ModbusTCPListener
       m_Address = InetAddress.getLocalHost();
       //Decommentez les deux lignes suivantes si vous écoutez sur l'adresse localHost 127.0.0.1 
       // et que vous souhaitez travailler en réseau 
-    //  String votreIp = "172.20.12.154"; // par exemple
-     // m_Address = InetAddress.getByName(votreIp);
+      //String votreIp = "172.20.14.124"; // par exemple
+      //m_Address = InetAddress.getByName(votreIp);
       System.out.println("Vous écouter sur l'adresse ? :" + m_Address);
     } catch (UnknownHostException ex) {
 
