@@ -1,6 +1,7 @@
 package pcControle.controller;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import pcControle.data.AutomLecture;
 import pcControle.ihm.IHM_Pingpong;
@@ -9,6 +10,7 @@ import pcControle.varAuto.VariableAuto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -16,27 +18,12 @@ import javafx.scene.shape.Circle;
 
 public class ScadaController implements Initializable{
 
+
 	AutomLecture automLecture;
 	AutomObserver observer;
 	Monitor monitor;
 	
-	
-	private IHM_Pingpong application;
-	IHM_Pingpong IHM = new IHM_Pingpong();
-	private int accumulator=0;
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
-
-	}
-	public void init(AutomLecture autom, Monitor monitor)
-	{
-		automLecture = autom;
-		this.monitor = monitor;
-		observer = new AutomObserver(this);
-		autom.addObserver(observer);
-	}
+	HashMap<Node, VariableAuto> widgets;
 	@FXML private Label Accumulateur;
 	// automate bouchons
 	@FXML private Circle presence_tube_bouchons;
@@ -49,10 +36,76 @@ public class ScadaController implements Initializable{
 	@FXML private Circle isTurning;
 	@FXML private Circle capteur_tube;
 	// automate pince tube
-	@FXML private Circle tube_sur_plateau;
+	@FXML private Circle tube_sur_plateau; // n'apparait nul part
 	@FXML private Circle tube_en_stock;
 	
+	@FXML private Button startAutomateB;
+	@FXML private Button actionneurHautB;
+	@FXML private Button actionneurBasB;
+	@FXML private Button moteurBalleB;
+	@FXML private Button remplirTubeB;
+	@FXML private Button MisEnPlaceTube;
+	@FXML private Button FaireTournerPlateau;	
+	@FXML private Button ActionPinceTube;
+	@FXML private Button back;
+	@FXML private Button bouchonner;
 	
+
+	
+	
+	private IHM_Pingpong application;
+	IHM_Pingpong IHM = new IHM_Pingpong();
+	private int accumulator=0;
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources)
+	{
+		
+	}
+	public void init(AutomLecture autom, Monitor monitor)
+	{
+		automLecture = autom;
+		this.monitor = monitor;
+		observer = new AutomObserver(this);
+		autom.addObserver(observer);
+		widgets = new HashMap<Node, VariableAuto>();
+		
+		fillWidgetsArray(widgets);
+		// construction de l'IHM
+		
+		
+		
+	}
+	
+	// Passage un peu chiant mais nécessaire pour l'implémentation
+	// de IHM Builder. La suite se fait plus facilement.
+	// Cette table d'association pourra servir d'ailleurs à minimiser le
+	// nombre de fonction set ci-dessous. 
+	private void fillWidgetsArray(HashMap<Node, VariableAuto> widgets) {
+		// On a Ommis: accumulateur,miseEnPlaceTube, back, tubeEnStock, tubeSurPlateau
+		widgets.put(ActionPinceTube, VariableAuto.actionPinces);
+		widgets.put(FaireTournerPlateau, VariableAuto.tournerPlateau);
+		widgets.put(actionneurBas, VariableAuto.actionneurChuteBas);
+		widgets.put(actionneurBasB, VariableAuto.actionneurChuteBas);
+		widgets.put(actionneurHaut, VariableAuto.actionneurChuteHaut);
+		widgets.put(actionneurHautB, VariableAuto.actionneurChuteHaut);
+		widgets.put(bouchonner, VariableAuto.bouchonner);
+		widgets.put(capteur_tube, VariableAuto.presenceTubeBalle);
+		widgets.put(isRunning, VariableAuto.running);
+		widgets.put(isTurning, VariableAuto.tournerPlateau);
+		widgets.put(moteurBalle, VariableAuto.moteurBalle);
+		widgets.put(moteurBalleB, VariableAuto.moteurBalle);
+		widgets.put(presence_tube_bouchons, VariableAuto.presenceTubeBouchons);
+		widgets.put(remplirTubeB, VariableAuto.remplissage);
+		widgets.put(startAutomateB, VariableAuto.running);
+		widgets.put(stock_bouchon, VariableAuto.capteurBouchons);
+	
+		
+		
+	}
+	public HashMap<Node, VariableAuto> getWidgets(){
+		return widgets;
+	}
 	private void setStartAutomate(){
 		setOnOff(VariableAuto.running);
 	}
@@ -119,19 +172,11 @@ public class ScadaController implements Initializable{
 	}
 
 	// ------------------------------------ SIMULATEUR ------------------------------------
-	@FXML private Button startAutomateB;
-	@FXML private Button Actionneur_Haut;
-	@FXML private Button Actionneur_Bas;
-	@FXML private Button moteurBalleB;
-	@FXML private Button remplirTubeB;
-	@FXML private Button MisEnPlaceTube;
-	@FXML private Button FaireTournerPlateau;	
-	@FXML private Button ActionPinceTube;
-	@FXML private Button back;
-	@FXML private Button bouchonner;
+
 	
 	@FXML public void Bouchonner(ActionEvent event){
 		bouchonner();
+		
 	}
 	
 	@FXML public void backEvent(ActionEvent event)	
@@ -144,6 +189,7 @@ public class ScadaController implements Initializable{
 	}
 	@FXML public void actionneurHaut(ActionEvent event)
 	{
+		
 		// si l'automate n'est pas en train de tourner
 		if(automLecture.getVar(VariableAuto.running)==0 || automLecture.getVar(VariableAuto.running)==-1)
 		setActionneurHaut();

@@ -33,7 +33,7 @@ public class User {
 	public void delRole(Role ro) {
 		roleBase.remove(ro);
 	}
-	public Vector<Role> getRole(){
-		return roleBase;
+	public Role getRole(){
+		return roleBase.get(0);
 	}
 }

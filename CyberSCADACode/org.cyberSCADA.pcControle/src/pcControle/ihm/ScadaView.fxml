@@ -90,8 +90,8 @@
       </Label>
       
       <Button fx:id="startAutomateB" layoutX="1100.0" layoutY="663.0" mnemonicParsing="false" onAction="#startAutomate" prefHeight="37.0" prefWidth="113.0" text="Start/Stop" />
-      <Button fx:id="Actionneur_Haut" layoutX="939.0" layoutY="144.0" mnemonicParsing="false" onAction="#actionneurHaut" prefHeight="37.0" prefWidth="130.0" text="Upper actuator" />
-      <Button fx:id="Actionneur_Bas" layoutX="939.0" layoutY="215.0" mnemonicParsing="false" onAction="#actionneurBas" prefHeight="37.0" prefWidth="130.0" text="Lower actuator" />
+      <Button fx:id="actionneurHautB" layoutX="939.0" layoutY="144.0" mnemonicParsing="false" onAction="#actionneurHaut" prefHeight="37.0" prefWidth="130.0" text="Upper actuator" />
+      <Button fx:id="actionneurBasB" layoutX="939.0" layoutY="215.0" mnemonicParsing="false" onAction="#actionneurBas" prefHeight="37.0" prefWidth="130.0" text="Lower actuator" />
       <Button fx:id="moteurBalleB" layoutX="939.0" layoutY="282.0" mnemonicParsing="false" onAction="#moteurBalle" prefHeight="37.0" prefWidth="113.0" text="Ball Engine" />
       <Button fx:id="remplirTubeB" layoutX="940.0" layoutY="350.0" mnemonicParsing="false" onAction="#remplirTube" prefHeight="37.0" prefWidth="113.0" text="Fill tube" />
       <Button fx:id="FaireTournerPlateau" layoutX="1100.0" layoutY="607.0" mnemonicParsing="false" onAction="#TournerPlateau" prefHeight="37.0" prefWidth="113.0" text="Rotate" />

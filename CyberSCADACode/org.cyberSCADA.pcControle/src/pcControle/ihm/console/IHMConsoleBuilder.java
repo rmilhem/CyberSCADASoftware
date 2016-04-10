@@ -14,12 +14,12 @@ public class IHMConsoleBuilder {
 	}
 	
 	
-	public void build(IHMConsole ihm, Vector<Role> rolesUser){
+	public void build(IHMConsole ihm, Role rolesUser){
 		// Pour l'instant gestion d'un role par utilisateur
 		// ajout des choix pour tous
 		ihm.addChoixMP("Lecture variables");
 		ihm.addChoixMP("Edition variables");
-		Vector<Right> rights = rightBase.getRights(rolesUser.get(0));
+		Vector<Right> rights = rightBase.getRights(rolesUser);
 		
 		String menuLecture = "";
 		String menuEcriture= "";
@@ -35,7 +35,7 @@ public class IHMConsoleBuilder {
 
 		}
 		
-		if(rolesUser.get(0).getName().equals("admin")){
+		if(rolesUser.getName().equals("admin")){
 		ihm.addChoixMP("Parametres systeme");
 		}
 	}

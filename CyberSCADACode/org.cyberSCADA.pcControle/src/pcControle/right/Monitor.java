@@ -68,7 +68,7 @@ public class Monitor {
 	}
 	public void setVar(VariableAuto nomVar, int val){
 		// si on a le droit
-		if(rightBase.orderIsOK(nomVar, true))
+		if(rightBase.orderIsOK(nomVar, true, currentUser.getRole()))
 		automate.setVar(nomVar, val);
 	}
 

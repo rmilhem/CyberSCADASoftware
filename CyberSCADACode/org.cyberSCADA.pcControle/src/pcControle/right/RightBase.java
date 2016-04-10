@@ -51,10 +51,10 @@ public class RightBase {
 		}
 	}
 	
-	public boolean orderIsOK(VariableAuto idVar, boolean mode){
+	public boolean orderIsOK(VariableAuto idVar, boolean mode, Role role){
 		
 		for(Right right : rights){
-			if(right.isOk(idVar, mode)) return true;
+			if(right.isOk(idVar, mode, role)) return true;
 		}
 		return false;
 	}
