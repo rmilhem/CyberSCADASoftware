@@ -2,14 +2,18 @@ package compilateur.grafcet;
 
 public class NodeStep {
 
-	private NodeTransition next;
-	private NodeTransition prev;
+	private NodeTransition nextTransi;
+	private NodeTransition prevTransi;
+	private NodeStep nextStep;
+	private NodeStep prevStep;
 	private Step step;
 	
 	public NodeStep(Step step){
 		this.step = step;
-		next = null;
-		prev = null;
+		nextStep = null;
+		prevStep = null;
+		nextTransi = null;
+		prevTransi = null;
 	}
 	
 	
@@ -17,19 +21,39 @@ public class NodeStep {
 		return step;
 	}
 	
-	public NodeTransition getPrev(){
-		return prev;
+	public NodeTransition getPrevTransition(){
+		return prevTransi;
 	}
 	
-	public NodeTransition getNext(){
-		return next;
+	public NodeTransition getNextTransition(){
+		return nextTransi;
 	}
 	
-	public void setPrev(NodeTransition prev){
-		this.prev = prev;
+	public NodeStep getPrevStep(){
+		return prevStep;
 	}
 	
-	public void setNext(NodeTransition next){
-		this.next = next;
+	public NodeStep getNextStep(){
+		return nextStep;
+	}
+	
+	public void setPrevTransition(NodeTransition prev){
+		this.prevTransi = prev;
+	}
+	
+	public void setNextTransition(NodeTransition next){
+		this.nextTransi = next;
+	}
+	
+	public void setPrevStep(NodeStep prev){
+		this.prevStep = prev;
+	}
+	
+	public void setNextStep(NodeStep next){
+		this.nextStep = next;
+	}
+	
+	public String toString(){
+		return step.name;
 	}
 }
