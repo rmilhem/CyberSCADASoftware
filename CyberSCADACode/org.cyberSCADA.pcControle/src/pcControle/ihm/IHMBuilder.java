@@ -2,8 +2,6 @@ package pcControle.ihm;
 
 import java.util.HashMap;
 
-import javax.management.monitor.Monitor;
-
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import pcControle.right.RightBase;

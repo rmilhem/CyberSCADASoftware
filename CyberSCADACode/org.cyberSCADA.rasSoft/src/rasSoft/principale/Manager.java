@@ -1,10 +1,7 @@
 package rasSoft.principale;
-import java.util.Random;
 
 import net.wimpi.modbus.ModbusCoupler;
-import net.wimpi.modbus.procimg.SimpleDigitalOut;
 import net.wimpi.modbus.procimg.SimpleProcessImage;
-import net.wimpi.modbus.procimg.SimpleRegister;
 import rasSoft.test.AutomPhy;
 import rasSoft.updater.UpdaterAuto;
 import rasSoft.updater.UpdaterAutoReel;

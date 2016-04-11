@@ -15,7 +15,6 @@ public class Firewall {
 		convertisseurModbus =  new ConvertisseurModbus();
 		// configuration des régles
 		// les droits en écriture
-		ruleBase.addRule(true, VariableAuto.capteurPresence);
 		ruleBase.addRule(true, VariableAuto.actionneurChuteHaut);
 		ruleBase.addRule(true, VariableAuto.actionneurChuteBas);
 		ruleBase.addRule(true, VariableAuto.moteurBalle);
@@ -23,7 +22,6 @@ public class Firewall {
 		ruleBase.addRule(true, VariableAuto.remplissage);
 		ruleBase.addRule(true, VariableAuto.tournerPlateau);
 		// les droits en lecture
-		ruleBase.addRule(false, VariableAuto.capteurPresence);
 		ruleBase.addRule(false, VariableAuto.presenceTubeBalle);
 		ruleBase.addRule(false, VariableAuto.actionneurChuteHaut);
 		ruleBase.addRule(false, VariableAuto.actionneurChuteBas);

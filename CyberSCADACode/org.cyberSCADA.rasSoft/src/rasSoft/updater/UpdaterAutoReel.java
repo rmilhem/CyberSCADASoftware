@@ -1,7 +1,6 @@
 package rasSoft.updater;
 
 import net.wimpi.modbus.ModbusCoupler;
-import net.wimpi.modbus.procimg.SimpleDigitalOut;
 import rasSoft.principale.ThreadPrincipal;
 import rasSoft.test.AutomPhy;
 

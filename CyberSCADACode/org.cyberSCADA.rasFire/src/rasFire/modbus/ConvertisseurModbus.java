@@ -96,10 +96,6 @@ public class ConvertisseurModbus {
 			retour[0] = adresseRasp2;
 			retour[1] = "2";
 			break;
-		case capteurPresence:
-			retour[0] = adresseRasp3;
-			retour[1] = "0";
-			break;
 		case actionPinces:
 			retour[0] = adresseRasp3;
 			retour[1] = "1";

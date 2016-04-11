@@ -21,12 +21,20 @@ import pcControle.right.Monitor;
 public class IHM_Pingpong extends Application {
 	private static Stage stage; // pourquoi static ? (julien)
 	private static Monitor monitor; // pourquoi obligé static ? (julien)
-	private static IHMBuilder ihmBuilder; 
+	private static IHMBuilder ihmBuilder;
+	public int lang;
 	
+	public int getLang() {
+		return lang;
+	}
+
+	public void setLang(int lang) {
+		this.lang = lang;
+	}
+
 	@Override
 	public void start(Stage primaryStage) {
 		monitor = new Monitor();
-		
 		try {
 			stage = primaryStage;
 			Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
@@ -46,7 +54,7 @@ public class IHM_Pingpong extends Application {
 		try
 		{
 			ScadaController Scada = (ScadaController) replaceSceneContent ("ScadaView.fxml");
-			Scada.init(monitor.getAutomate(), monitor);
+			Scada.init(monitor.getAutomate(), monitor, getLang());
 			Scada.setApp(this);	
 			ihmBuilder = new IHMBuilder(monitor.getRightBase(), monitor.getUser());
 			ihmBuilder.build(Scada.getWidgets());
@@ -68,7 +76,6 @@ public class IHM_Pingpong extends Application {
 	// Si login est bon, charger le ScadaView
 	public void userLogin(String account, String password) 
 	{
-	
 		if(monitor.identification(account, password))
 		{
 			gotoMain();

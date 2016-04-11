@@ -1,9 +1,6 @@
 package pcControle.ihm.console;
-import java.io.IOException;
-import java.net.Socket;
 import java.util.Hashtable;
 import java.util.Scanner;
-import java.util.Vector;
 
 import pcControle.data.AutomLecture;
 import pcControle.right.Monitor;
