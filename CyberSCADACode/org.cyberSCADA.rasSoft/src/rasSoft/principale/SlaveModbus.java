@@ -2,9 +2,6 @@ package rasSoft.principale;
 
 
 import net.wimpi.modbus.net.*;
-import net.wimpi.modbus.procimg.*;
-import net.wimpi.modbus.Modbus;
-import net.wimpi.modbus.ModbusCoupler;
 
 /** 
  * 

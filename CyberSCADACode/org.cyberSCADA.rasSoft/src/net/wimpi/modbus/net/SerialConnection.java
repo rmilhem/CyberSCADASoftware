@@ -25,7 +25,6 @@ import javax.comm.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
-import javax.swing.*;
 
 /**
  * Class that implements a serial connection which
