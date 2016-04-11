@@ -1,28 +1,48 @@
 package compilateur.grafcet;
 
-public class Grafcet {
+public class Grafcet extends Thread {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		variable = new Variable();
+		
 		Grafcet g = new Grafcet(new Step("step1"));
-
-		g.addTransition(new Transition("tr1"));
+		controller = new Controller(g);
+		
+		variable.condition.put("s_2_2.x", new Bool(false));
+		variable.condition.put("index", new Bool(false));
+		variable.condition.put("auto", new Bool(false));
+		
+		g.addTransition(new Transition(controller, "tr1"));		
+		g.getNodeTransition("tr1").getTransi().setCondition((Bool)variable.condition.get("s_2_2.x"));
+		
 		g.addStep(new Step("step2"));
-		g.addTransition(new Transition("tr2"));
+		g.addTransition(new Transition(controller, "tr2"));
 		g.addStep(new Step("step3"));
-		g.addTransition(new Transition("tr3"));
+		g.addTransition(new Transition(controller, "tr3"));
 		g.addFinalStep(new Step("step4"));
-		g.addFinalTransition(new Transition("tr4"));
+		g.addFinalTransition(new Transition(controller, "tr4"));
 		
-		//System.out.println(g);
+	
+		NodeStep tt = g.getNodeStep("step4");
+		if(tt != null){System.out.println("tr1 ok");}
+		System.out.println(g.getNodeTransition("tr1").getTransi());
 		
-		System.out.println(g.getLastStep());
+		//System.out.println(g.getLastTransition());
+		//g.start();
+		
+		
 	}
 	
 	private NodeStep firstStep;
 	private NodeStep tmpStep;
 	private NodeTransition firstTransi;
 	private NodeTransition tmpTransi;
+	private NodeStep currentStep;
+	private NodeTransition currentTransition;
+	private static Variable variable;
+	private static Controller controller;
+	private boolean running = true;
 	
 	
 	public Grafcet(Step n){
@@ -30,6 +50,29 @@ public class Grafcet {
 		firstStep = new NodeStep(n);
 		firstStep.getStep().setInitial(true);
 		
+	}
+	
+	public void run(){
+		firstStep.getStep().start();
+		currentStep = firstStep;
+		firstTransi.getTransi().start();
+		currentTransition = firstTransi;
+		while(running){
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("10s");
+			((Bool)variable.condition.get("s_2_2.x")).set(true);
+		}
+	}
+	
+	public void next(){
+		currentStep = currentStep.getNextStep();
+		currentTransition = currentTransition.getNextTransition();
+		System.out.println("current : "+currentStep+" | "+currentTransition);
 	}
 	
 	/******************** Méthode d'ajout ***********************/
@@ -50,6 +93,7 @@ public class Grafcet {
 	public void addTransition(Transition transition){
 		if(firstTransi == null){
 			firstTransi = new NodeTransition(transition);
+			firstTransi.getTransi().setInitial(true);
 		}
 		else{
 			NodeTransition transi = new NodeTransition(transition);
@@ -75,7 +119,7 @@ public class Grafcet {
 		tmpStep = firstStep;
 		boolean b = true;
 		
-		while(tmpStep != getLastStep() && b){
+		do {
 			if(tmpStep.getStep().name.equals(name)){
 				return tmpStep;
 			}
@@ -88,7 +132,27 @@ public class Grafcet {
 					return tmpStep;
 				}
 			}
-		}
+		}while(tmpStep != getLastStep() && b);
+		return null;
+	}
+	public NodeTransition getNodeTransition(String name){
+		tmpTransi = firstTransi;
+		boolean b = true;
+				
+		do {
+			if(tmpTransi.getTransi().name.equals(name)){
+				return tmpTransi;
+			}
+			else{
+				tmpTransi = tmpTransi.getNextTransition();
+				if(tmpTransi.getTransi().isInitial()){
+					b = false;
+				}
+				else if(tmpTransi.getTransi().name.equals(name)){
+					return tmpTransi;
+				}
+			}
+		}while(tmpTransi != getLastTransition() && b);
 		return null;
 	}
 	
@@ -107,9 +171,14 @@ public class Grafcet {
 	}
 	public NodeTransition getLastTransition(){
 		NodeTransition tmp = firstTransi;
-		while(tmp.getNextTransition() != null)
+		boolean b = true;
+		while(tmp.getNextTransition() != null && b)
 		{
 			tmp = tmp.getNextTransition();
+			if(tmp == firstTransi){
+				b = false;
+				tmp = tmp.getPrevTransition();
+			}
 		}
 		return tmp;
 	}
@@ -126,7 +195,7 @@ public class Grafcet {
 	public String toString(){
 		NodeStep tmp = firstStep;
 		NodeTransition tmp2 = firstTransi;
-		boolean b = true;
+
 		String s = "";
 		do
 		{

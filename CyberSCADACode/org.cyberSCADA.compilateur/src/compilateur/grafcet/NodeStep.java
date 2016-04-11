@@ -1,11 +1,7 @@
 package compilateur.grafcet;
 
-public class NodeStep {
+public class NodeStep extends NodeComposant{
 
-	private NodeTransition nextTransi;
-	private NodeTransition prevTransi;
-	private NodeStep nextStep;
-	private NodeStep prevStep;
 	private Step step;
 	
 	public NodeStep(Step step){
