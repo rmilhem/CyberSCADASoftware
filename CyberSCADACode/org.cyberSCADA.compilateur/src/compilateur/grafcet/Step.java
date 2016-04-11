@@ -8,16 +8,24 @@ public class Step extends Composant{
 	}
 	
 	public void run(){
-		active = true;
+		active.set(true);
 		System.out.println("start step");
+	}
+	
+	public String getNom(){
+		return this.name;
 	}
 	
 	
 	public void setActive(boolean b){
-		active = b;
+		active.set(true);
 	}
 	
 	public boolean isActive(){
+		return active.get();
+	}
+	
+	public Bool getActive(){
 		return active;
 	}
 	

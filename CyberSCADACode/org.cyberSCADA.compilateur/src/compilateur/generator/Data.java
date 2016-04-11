@@ -1,5 +1,7 @@
 package compilateur.generator;
 
+import compilateur.grafcet.Bool;
+
 public class Data {
 	
 	private String s;
@@ -13,6 +15,12 @@ public class Data {
 		s = "}\n";
 		return s;
 	}
+	
+	public String setPackage(){
+		s = "package compilateur.grafcet;\n\n";
+		return s;
+	}
+	
 	public String imports(){
 		s= "import java.util.*;\n\n";
 		return s;
@@ -23,18 +31,33 @@ public class Data {
 		return s;
 	}
 	
+	public String grafcet(){
+		s = "public static Grafcet g;\n";
+		return s;
+	}
+	
+	public String initGrafcet(){
+		s = "g = new Grafcet();\n";
+		return s;
+	}
+	
 	public String classe(String a){
 		s = "public class "+a+"{\n";
 		return s;
 	}
 	
-	public String step(String nom, String num){
-		s = "Step step_"+num+" = new Step(\""+nom+"\");\n";
+	public String step(String nom){
+		s = "g.addStep(\""+nom+"\");\n";
 		return s;
 	}
 	
-	public String transition(String nom){
-		s = "Transition transi_"+nom+" = new Transition(\"transi_"+nom+"\");\n";
+	public String transition(String nom, String var){
+		s = "g.addTransition(\""+nom+"\","+var+");\n";
+		return s;
+	}
+	
+	public String ajoutVariable(String name){
+		s = "g.addVariable(\""+name+"\", false);\n";
 		return s;
 	}
 	
@@ -45,6 +68,11 @@ public class Data {
 	
 	public String stepIsActive(String nom, String valInit){
 		s = nom+".isActive = "+valInit+";\n\n";
+		return s;
+	}
+	
+	public String start(){
+		s = "g.start();\n";
 		return s;
 	}
 

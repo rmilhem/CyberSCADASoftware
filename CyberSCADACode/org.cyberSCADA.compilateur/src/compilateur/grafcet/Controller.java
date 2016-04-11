@@ -11,4 +11,8 @@ public class Controller {
 	public void next(){
 		g.next();
 	}
+	
+	public boolean getState(String name){
+		return g.getNodeStep(name).getStep().isActive();
+	}
 }

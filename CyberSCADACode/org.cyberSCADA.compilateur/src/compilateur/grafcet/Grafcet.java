@@ -4,32 +4,33 @@ public class Grafcet extends Thread {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		variable = new Variable();
+		
 		
 		Grafcet g = new Grafcet(new Step("step1"));
-		controller = new Controller(g);
+		
 		
 		variable.condition.put("s_2_2.x", new Bool(false));
 		variable.condition.put("index", new Bool(false));
 		variable.condition.put("auto", new Bool(false));
 		
-		g.addTransition(new Transition(controller, "tr1"));		
-		g.getNodeTransition("tr1").getTransi().setCondition((Bool)variable.condition.get("s_2_2.x"));
-		
-		g.addStep(new Step("step2"));
-		g.addTransition(new Transition(controller, "tr2"));
-		g.addStep(new Step("step3"));
-		g.addTransition(new Transition(controller, "tr3"));
-		g.addFinalStep(new Step("step4"));
-		g.addFinalTransition(new Transition(controller, "tr4"));
+		g.addTransition("tr1", "step1.x");	
+		//System.out.println(g.getFirstTransi());
+		//g.getNodeTransition("tr1").getTransi().setCondition(variable.condition.get("s_2_2.x"));
+		//System.out.println("cond : "+g.getNodeTransition("tr1").getTransi().getCondition());
+		g.addStep("step2");
+		g.addTransition("tr2");
+		g.addStep("step3");
+		g.addTransition("tr3");
+		g.addFinalStep("step4");
+		g.addFinalTransition("tr4");
 		
 	
-		NodeStep tt = g.getNodeStep("step4");
+		/*NodeStep tt = g.getNodeStep("step4");
 		if(tt != null){System.out.println("tr1 ok");}
-		System.out.println(g.getNodeTransition("tr1").getTransi());
+		System.out.println(g.getNodeTransition("tr1").getTransi());*/
 		
 		//System.out.println(g.getLastTransition());
-		//g.start();
+		g.start();
 		
 		
 	}
@@ -49,23 +50,28 @@ public class Grafcet extends Thread {
 		
 		firstStep = new NodeStep(n);
 		firstStep.getStep().setInitial(true);
-		
+		controller = new Controller(this);
+		variable = new Variable();
+	}
+	public Grafcet(){
+		controller = new Controller(this);
 	}
 	
 	public void run(){
+		System.out.println("init : "+firstStep.getStep().isActive());
 		firstStep.getStep().start();
 		currentStep = firstStep;
 		firstTransi.getTransi().start();
 		currentTransition = firstTransi;
 		while(running){
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			System.out.println("10s");
-			((Bool)variable.condition.get("s_2_2.x")).set(true);
+			
 		}
 	}
 	
@@ -75,37 +81,58 @@ public class Grafcet extends Thread {
 		System.out.println("current : "+currentStep+" | "+currentTransition);
 	}
 	
-	/******************** Méthode d'ajout ***********************/
-	public void addStep(Step step){
-		NodeStep node = new NodeStep(step);
-		NodeStep tmp = getLastStep();
-		tmp.setNextStep(node);
-		node.setPrevStep(tmp);
+	/******************** Méthode d'ajout d'étape / transition***********************/
+	public void addStep(String name){
+		if(firstStep == null){
+			firstStep = new NodeStep(new Step(name));
+			firstStep.getStep().setInitial(true);
+		}
+		else{
+			NodeStep node = new NodeStep(new Step(name));
+			NodeStep tmp = getLastStep();
+			tmp.setNextStep(node);
+			node.setPrevStep(tmp);
+		}
 	}
-	public void addFinalStep(Step step){
-		NodeStep node = new NodeStep(step);
+	public void addFinalStep(String name){
+		NodeStep node = new NodeStep(new Step(name));
 		NodeStep tmp = getLastStep();
 		tmp.setNextStep(node);
 		node.setPrevStep(tmp);
 		node.setNextStep(firstStep);
 		firstStep.setPrevStep(node);
 	}
-	public void addTransition(Transition transition){
+	public void addTransition(String name, String ... cond ){
+		Bool b;
+		NodeTransition transi;
+		
 		if(firstTransi == null){
-			firstTransi = new NodeTransition(transition);
-			firstTransi.getTransi().setInitial(true);
+			firstTransi = new NodeTransition(new Transition(controller, name));
+			transi = firstTransi;
+			transi.getTransi().setInitial(true);
 		}
 		else{
-			NodeTransition transi = new NodeTransition(transition);
+			transi = new NodeTransition(new Transition(controller, name));
 			NodeTransition tmp = getLastTransition();
 			tmp.setNextTransition(transi);
 			transi.setPrevTransition(tmp);
 		}
+		
+		if(cond.length == 1){
+			if(cond[0].contains(".x")){
+				String s = cond[0].substring(0, cond[0].length()-2);
+				b = getNodeStep(s).getStep().getActive();
+			}
+			else{
+				b = variable.condition.get(cond[0]);
+			}
+			transi.getTransi().setCondition(b);
+		}
 	}
-	public void addFinalTransition(Transition transition){
+	public void addFinalTransition(String name){
 		if(firstTransi == null){}
 		else{
-			NodeTransition transi = new NodeTransition(transition);
+			NodeTransition transi = new NodeTransition(new Transition(controller, name));
 			NodeTransition tmp = getLastTransition();
 			tmp.setNextTransition(transi);
 			transi.setPrevTransition(tmp);
@@ -113,6 +140,11 @@ public class Grafcet extends Thread {
 			firstTransi.setPrevTransition(transi);
 		}
 	}	
+	/******************** Méthode d'ajout de variable***********************/
+	
+	public void addVariable(String name, boolean value){
+		variable.condition.put(name, new Bool(value));
+	}
 	
 	/******************** Méthode get ***********************/
 	public NodeStep getNodeStep(String name){
@@ -183,12 +215,18 @@ public class Grafcet extends Thread {
 		return tmp;
 	}
 	
-	/******************** Méthode set ***********************/
+	/******************** Méthode first ***********************/
 	public void setFirstStep(NodeStep first){
 		this.firstStep = first;
 	}
 	public NodeStep getFirstStep(){
 		return firstStep;
+	}
+	public void setFirstTransi(NodeTransition first){
+		this.firstTransi = first;
+	}
+	public NodeTransition getFirstTransi(){
+		return firstTransi;
 	}
 	
 	/******************** Méthode d'affichage ***********************/

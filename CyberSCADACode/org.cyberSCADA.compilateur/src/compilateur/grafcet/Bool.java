@@ -14,5 +14,11 @@ public class Bool {
 	public boolean get(){
 		return bool;
 	}
+	
+	public String toString(){
+		String s = "";
+		s += bool;
+		return s;
+	}
 
 }

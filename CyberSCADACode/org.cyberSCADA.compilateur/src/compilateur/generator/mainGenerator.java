@@ -4,30 +4,38 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.*;
 
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
+
+import compilateur.grafcet.Grafcet;
 
 public class mainGenerator {
 		
 	static Document document = null;
 	static Element racine;
-	static String source = "E:\\Users\\WERNER\\git\\CyberSCADASoftware\\CyberSCADACode\\org.cyberSCADA.compilateur\\test.xml";
-	static String out = "E:\\Users\\WERNER\\git\\CyberSCADASoftware\\CyberSCADACode\\org.cyberSCADA.compilateur\\out.java";
+	static String source = "C:\\Users\\Werner\\Documents\\test.xml";
+	static String out = "C:\\Users\\Werner\\git\\CyberSCADASoftware\\CyberSCADACode\\org.cyberSCADA.compilateur\\src\\compilateur\\grafcet\\out.java";
 	
 	static FileWriter writer;
 	static Data data;
 	static Tri tri;
+	
+	private static Pattern pattern;
+    private static Matcher matcher;
 	
 	static String code ="";
 
 	public static void main(String[] args) throws IOException {
 		
 		int i = 0, num = 0, c = 0;
-		int nbTotal = 0, t[];
+		int nbTotal = 0, tStep[], tTransi[];
 		
 		data = new Data();
 		tri = new Tri();
+		
+		pattern = Pattern.compile(".x");
 		
 		boolean bool = false;
 		//On crée une instance de SAXBuilder
@@ -50,12 +58,21 @@ public class mainGenerator {
 		writer = new FileWriter(out);
 		
 		
-		
+		code += data.setPackage();
 		code += data.imports();
+		code += data.classe("Out");
+		code += data.grafcet();
 		code += data.main();
+		code += data.initGrafcet();
 		
+		List varList = racine.getChild("dataBlock").getChildren("variables");
+		Iterator iVar = varList.iterator();
+		while(iVar.hasNext()){
+			Element var = (Element)iVar.next();
+			code += data.ajoutVariable(var.getAttributeValue("name"));
+		}
 		
-		List grafcet = racine.getChild("FEFExchangeFile").getChildren("SFCProgram");
+		List grafcet = racine.getChildren("SFCProgram");
 		Iterator it = grafcet.iterator();
 		
 		//while(i.hasNext())
@@ -65,49 +82,73 @@ public class mainGenerator {
 		      code += data.comNom(courant.getChild("identProgram").getAttribute("name").getValue());
 		  // }
 		      		
-		
+	  
+		      
 		List stepList = courant.getChild("chartSource").getChild("networkSFC").getChildren("step");
 		Iterator iStep = stepList.iterator();
 		LinkedList <Element> listStep;
-		t = new int[stepList.size()];
+		tStep = new int[stepList.size()];
 		while(iStep.hasNext()){
 			
 			Element step = (Element)iStep.next();
-			t[c] = Integer.parseInt(step.getChild("objPostion").getAttributeValue("posY"));
+			tStep[c] = Integer.parseInt(step.getChild("objPosition").getAttributeValue("posY"));
 			c ++;
-			t = tri.sort(t);
+			
 		}
-		
+		tStep = tri.sort(tStep);
 		
 		iStep = stepList.iterator();
-		while(bool != true && iStep.hasNext()){
-			Element step = (Element)iStep.next();
-			
-			if(step.getAttributeValue("stepType").equals("initialStep")){
-				code += data.step(step.getAttributeValue("stepName"), String.valueOf(num));
-				code += data.stepIsActive(step.getAttributeValue("stepName"), "true");
-				num ++;
-				nbTotal ++;
-				bool = true;
+		boolean b = false;
+		for(int j : tStep){
+			b = false;
+			iStep = stepList.iterator();
+			while(!b && iStep.hasNext()){
+				Element step = (Element)iStep.next();
+				if(Integer.valueOf(step.getChild("objPosition").getAttributeValue("posY")) == j){
+					b = true;
+					code += data.step(step.getAttributeValue("stepName"));
+				}
 			}
-		}
-		iStep = stepList.iterator();
-		c = 0;
-		while(iStep.hasNext()){
-			Element step = (Element)iStep.next();
-			
-			//listStep.add(c, step.getChild("objPosition").getAttributeValue("posY"))){
-			code += data.step(step.getAttributeValue("stepName"), String.valueOf(num));
-			
-			code += data.stepIsActive(step.getAttributeValue("stepName"), "false");
-			num ++;
-			nbTotal ++;
-			//}
 		}
 		
 		List transiList = courant.getChild("chartSource").getChild("networkSFC").getChildren("transition");
 		Iterator iTransi = transiList.iterator();
 		
+		LinkedList <Element> listTransi;
+		tTransi = new int[transiList.size()];
+		c = 0;
+		while(iTransi.hasNext()){
+			
+			Element transi = (Element)iTransi.next();
+			tTransi[c] = Integer.parseInt(transi.getChild("objPosition").getAttributeValue("posY"));
+			c ++;
+			
+		}
+		tTransi = tri.sort(tTransi);
+		
+		iTransi = transiList.iterator();
+		c = 0;
+		for(int j : tTransi){
+			b = false;
+			iTransi = transiList.iterator();
+			while(!b && iTransi.hasNext()){
+				Element transi = (Element)iTransi.next();
+				if(Integer.valueOf(transi.getChild("objPosition").getAttributeValue("posY")) == j){
+					b = true;
+					String name = transi.getChild("transitionCondition").getChildText("variableName");
+					matcher = pattern.matcher(name);
+					if(matcher.find()){
+						
+					}
+					else {
+						
+					}
+					code += data.transition(name);
+					c++;
+				}
+			}
+		}
+		/*
 		while(iTransi.hasNext()){
 			Element transi = (Element)iTransi.next();
 			
@@ -118,8 +159,9 @@ public class mainGenerator {
 		
 		while(i < nbTotal){
 			i++;
-		}
-		
+		}*/
+		code += data.start();
+		code += data.accoladeFin();
 		code += data.accoladeFin();
 		writer.write(code);
 		writer.close();
