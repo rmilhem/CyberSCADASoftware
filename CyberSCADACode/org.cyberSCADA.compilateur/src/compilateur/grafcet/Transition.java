@@ -28,8 +28,7 @@ public class Transition extends Composant{
 	
 	public void run(){
 		System.out.println("start transi : "+name);
-		while(!condition.get()/*!c.getState("step1")*/){
-			System.out.println("condition : : : "+condition);
+		while(!condition.get()){
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {

@@ -27,17 +27,25 @@ public class Data {
 	}
 	
 	public String main(){
-		s = "public static void main(){\n\n";
+		s = "public static void main(String args[]){\n\n";
 		return s;
 	}
 	
-	public String grafcet(){
-		s = "public static Grafcet g;\n";
+	public String varInstance(){
+		s = "public static Variable variable;\n\n";
 		return s;
 	}
 	
-	public String initGrafcet(){
-		s = "g = new Grafcet();\n";
+	public String initVariable(){
+		s = "variable = new Variable();\n";
+		return s;
+	}
+	public String varGrafcet(String name){
+		s = "Grafcet "+name+";\n";
+		return s;
+	}
+	public String initGrafcet(String name){
+		s = name +" = new Grafcet(variable);\n\n";
 		return s;
 	}
 	
@@ -46,18 +54,27 @@ public class Data {
 		return s;
 	}
 	
-	public String step(String nom){
-		s = "g.addStep(\""+nom+"\");\n";
+	public String step(String nomGrafcet, String nom){
+		s = nomGrafcet+".addStep(\""+nom+"\");\n";
 		return s;
 	}
 	
-	public String transition(String nom, String var){
-		s = "g.addTransition(\""+nom+"\","+var+");\n";
+	public String transition(String nomGrafcet, String nom){
+		s = nomGrafcet+".addTransition(\""+nom+"\");\n";
+		return s;
+	}
+	public String transition(String nomGrafcet, String nom, String var){
+		s = nomGrafcet+".addTransition(\""+nom+"\",\""+var+"\");\n";
+		return s;
+	}
+	public String addCondition(String nomGrafcet, String nom, String var){
+		String s =var.substring(0, var.length()-2);
+		s = nomGrafcet+".getNodeTransition(\""+nom+"\").getTransi().setCondition("+nomGrafcet+".getNodeStep(\""+s+"\").getStep().getActive());\n";
 		return s;
 	}
 	
 	public String ajoutVariable(String name){
-		s = "g.addVariable(\""+name+"\", false);\n";
+		s = "variable.addVariable(\""+name+"\", false);\n";
 		return s;
 	}
 	
@@ -71,8 +88,8 @@ public class Data {
 		return s;
 	}
 	
-	public String start(){
-		s = "g.start();\n";
+	public String start(String nomGrafcet){
+		s = nomGrafcet+".start();\n";
 		return s;
 	}
 

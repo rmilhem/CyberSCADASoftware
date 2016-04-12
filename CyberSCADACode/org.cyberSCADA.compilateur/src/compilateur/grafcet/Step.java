@@ -9,7 +9,7 @@ public class Step extends Composant{
 	
 	public void run(){
 		active.set(true);
-		System.out.println("start step");
+		System.out.println("start step : "+name);
 	}
 	
 	public String getNom(){

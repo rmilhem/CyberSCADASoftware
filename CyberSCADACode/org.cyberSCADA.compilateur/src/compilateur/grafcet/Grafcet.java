@@ -9,10 +9,6 @@ public class Grafcet extends Thread {
 		Grafcet g = new Grafcet(new Step("step1"));
 		
 		
-		variable.condition.put("s_2_2.x", new Bool(false));
-		variable.condition.put("index", new Bool(false));
-		variable.condition.put("auto", new Bool(false));
-		
 		g.addTransition("tr1", "step1.x");	
 		//System.out.println(g.getFirstTransi());
 		//g.getNodeTransition("tr1").getTransi().setCondition(variable.condition.get("s_2_2.x"));
@@ -53,12 +49,19 @@ public class Grafcet extends Thread {
 		controller = new Controller(this);
 		variable = new Variable();
 	}
-	public Grafcet(){
+	public Grafcet(Variable v){
 		controller = new Controller(this);
+		if(v != null)
+			variable = v;
+		else{//mode test
+			variable = new Variable();
+			variable.condition.put("s_2_2.x", new Bool(false));
+			variable.condition.put("index", new Bool(false));
+			variable.condition.put("auto", new Bool(false));
+		}
 	}
 	
 	public void run(){
-		System.out.println("init : "+firstStep.getStep().isActive());
 		firstStep.getStep().start();
 		currentStep = firstStep;
 		firstTransi.getTransi().start();
@@ -71,6 +74,7 @@ public class Grafcet extends Thread {
 				e.printStackTrace();
 			}
 			System.out.println("10s");
+			//variable.condition.get("S_2_2.x").set(true);
 			
 		}
 	}
@@ -140,11 +144,6 @@ public class Grafcet extends Thread {
 			firstTransi.setPrevTransition(transi);
 		}
 	}	
-	/******************** Méthode d'ajout de variable***********************/
-	
-	public void addVariable(String name, boolean value){
-		variable.condition.put(name, new Bool(value));
-	}
 	
 	/******************** Méthode get ***********************/
 	public NodeStep getNodeStep(String name){
