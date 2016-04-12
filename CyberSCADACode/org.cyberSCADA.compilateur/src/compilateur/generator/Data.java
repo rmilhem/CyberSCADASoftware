@@ -1,6 +1,6 @@
 package compilateur.generator;
 
-import compilateur.grafcet.Bool;
+import java.util.Hashtable;
 
 public class Data {
 	
@@ -67,9 +67,25 @@ public class Data {
 		s = nomGrafcet+".addTransition(\""+nom+"\",\""+var+"\");\n";
 		return s;
 	}
-	public String addCondition(String nomGrafcet, String nom, String var){
+	public String addConditionEtat(String nomGrafcet, String nom, String var){
 		String s =var.substring(0, var.length()-2);
 		s = nomGrafcet+".getNodeTransition(\""+nom+"\").getTransi().setCondition("+nomGrafcet+".getNodeStep(\""+s+"\").getStep().getActive());\n";
+		return s;
+	}
+	public String addConditionLadder(String nomGrafcet, String nom, String var[], Hashtable<String, String> hash){
+		String cond = "";
+		for(String i : var){
+			if(i.contains(".x")){
+				String ss =i.substring(0, i.length()-2);
+				cond += (cond.equals("")) ? hash.get(ss).toString()+".getNodeStep(\""+ss+"\").getStep().getActive().get()" : ", "+hash.get(ss).toString()+".getNodeStep(\""+ss+"\").getStep().getActive().get()";
+			}
+			else{
+				cond += (cond.equals("")) ? "variable.condition.get(\""+i+"\").get()" : ", variable.condition.get(\""+i+"\").get()";
+				
+			}
+			
+			s = nomGrafcet+".getNodeTransition(\""+nom+"\").getTransi().setCondition(new Bool("+cond+"));\n";
+		}
 		return s;
 	}
 	

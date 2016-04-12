@@ -24,8 +24,9 @@ public class mainGenerator {
 
 	static String code ="";
 
+	static Hashtable<String, String> variableEtat = new Hashtable<String, String>();
 	static Vector<String> tamponEtat = new Vector<String>();
-	static Vector<String> tamponLadder = new Vector<String>();
+	static Hashtable<String, String[]> tamponLadder = new Hashtable<String,String[]>();
 
 	public static void main(String[] args) throws IOException {
 
@@ -63,6 +64,8 @@ public class mainGenerator {
 		code += data.main();
 		code += data.initVariable();
 
+		/*******************************Variable*******************************/
+		
 		List varList = racine.getChild("dataBlock").getChildren("variables");
 		Iterator iVar = varList.iterator();
 		while(iVar.hasNext()){
@@ -111,6 +114,7 @@ public class mainGenerator {
 					if(Integer.valueOf(step.getChild("objPosition").getAttributeValue("posY")) == j){
 						b = true;
 						code += data.step(nomGrafcet, step.getAttributeValue("stepName"));
+						variableEtat.put(step.getAttributeValue("stepName"), nomGrafcet);
 					}
 				}
 			}
@@ -143,12 +147,15 @@ public class mainGenerator {
 						b = true;
 						if(transi.getChild("transitionCondition").getChild("variableName") != null){
 							String name = transi.getChild("transitionCondition").getChildText("variableName");
-							System.out.println(name);
+							
 							if(name.contains(".x")){
+								System.out.println("variable etat : " +name);
 								code += data.transition(nomGrafcet, name);
-								tamponEtat.addElement(name);
+								tamponEtat.addElement(nomGrafcet+"/"+name);
+								
 							}
 							else {
+								System.out.println("variable : " +name);
 								code += data.transition(nomGrafcet, name, name);
 							}
 
@@ -156,7 +163,7 @@ public class mainGenerator {
 						}
 						else if(transi.getChild("transitionCondition").getChild("sectionName") != null){
 							String name = transi.getChild("transitionCondition").getChildText("sectionName");
-							System.out.println(name);
+							System.out.println("ladder : "+name);
 							
 							code += data.transition(nomGrafcet, name);
 
@@ -165,17 +172,57 @@ public class mainGenerator {
 					}
 				}
 			}
-			for(String s : tamponEtat){
-				code += data.addCondition(nomGrafcet, s, s);
-			}
-			
-			tamponEtat = new Vector<String>();
 			
 			/*******************************Ladder*******************************/
 			
+			List ladderList = courant.getChildren("transitionSource");
+			Iterator iLadder = ladderList.iterator();
 			
-			//code += data.start();
+			while(iLadder.hasNext()){
+				Element ladder = (Element)iLadder.next();
+				String nameLadder = ladder.getAttributeValue("name");
+				List lineList = ladder.getChild("LDSource").getChild("networkLD").getChildren("typeLine");
+				Iterator iLine = lineList.iterator();
+				
+				while(iLine.hasNext()){
+					Element line = (Element)iLine.next();
+					
+					List contactList = line.getChildren("contact");
+					if(contactList.size() != 0){
+						Iterator iContact = contactList.iterator();
+						String cond[] = new String[contactList.size()];
+						c = 0;
+						while(iContact.hasNext()){
+							Element contact = (Element)iContact.next();
+							cond[c] = contact.getAttributeValue("contactVariableName");
+							c ++;
+						}
+						tamponLadder.put(nomGrafcet+"/"+nameLadder,cond);
+						//code += data.addConditionLadder(nomGrafcet, nameLadder, cond);
+					}
+				}
+				
+				
+			}
+			
+			
 		}
+		
+		for(String s : tamponEtat){
+			String ss[] = s.split("/");
+			code += data.addConditionEtat(ss[0], ss[1], ss[1]);
+		}
+		
+		Enumeration e = tamponLadder.keys();
+		
+		while(e.hasMoreElements()){
+			String ee = (String)e.nextElement();
+			String ss[] = ee.toString().split("/");
+			code += data.addConditionLadder(ss[0], ss[1], tamponLadder.get(ee), variableEtat);
+		}
+		
+		//code += data.start();
+		
 		code += data.accoladeFin();
 		code += data.accoladeFin();
 		writer.write(code);
