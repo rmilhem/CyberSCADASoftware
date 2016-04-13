@@ -244,7 +244,7 @@ public class ScadaController implements Initializable{
 		String[] trad=new String[23];
         String ligne;
         try{
-        	fichier = new BufferedReader(new FileReader(new File("src\\pcControle\\controller\\trad.txt")));
+        	fichier = new BufferedReader(new FileReader(new File("src/pcControle/controller/trad.txt")));
         }
         catch(FileNotFoundException exc){
         	System.out.println("Erreur d'ouverture");

@@ -32,9 +32,10 @@ public class AutomX extends AutomLecture{
 		
 		// création de la capacité de communication de l'automate
 			com = new Com(firewallIp, port, this);
-			updated= com.connect();
+		
 		ThreadUpdateAuto threadUpdate = new ThreadUpdateAuto(this, com);
 		threadUpdate.start();
+		updated = com.isSocketConnecte();
 	}
 	public boolean isUpdated(){
 		return updated;
