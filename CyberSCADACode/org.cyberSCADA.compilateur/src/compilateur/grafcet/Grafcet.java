@@ -4,53 +4,92 @@ public class Grafcet extends Thread {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		
-		Grafcet g = new Grafcet(new Step("step1"));
-		
-		
-		g.addTransition("tr1", "step1.x");	
+
+		String st[];String tr[];String c[];
+		Grafcet g = new Grafcet("step1");
+
+		tr = new String[1];
+		tr[0] = "tr1";
+		c = new String[1];
+		c[0] = "step1.x";
+		g.addTransition(tr, c);	
 		//System.out.println(g.getFirstTransi());
 		//g.getNodeTransition("tr1").getTransi().setCondition(variable.condition.get("s_2_2.x"));
 		//System.out.println("cond : "+g.getNodeTransition("tr1").getTransi().getCondition());
-		g.addStep("step2");
-		g.addTransition("tr2");
-		g.addStep("step3");
-		g.addTransition("tr3");
-		g.addFinalStep("step4");
-		g.addFinalTransition("tr4");
+		st = new String[3];
+		st[0] = "s21";st[1] = "s22";st[2] = "s23";
+		g.addStep(st);
 		
-	
+		tr = new String[3];
+		tr[0] = "tr21";tr[1] = "tr22";tr[2] = "tr23";
+		c = new String[1];
+		String c2[] = new String[1];
+		String c3[] = new String[1];
+		c[0] = "test1";c2[0] = "test2";c3[0] = "test3";
+		g.addTransition(tr, c,c2,c3);
+		
+		st = new String[3];
+		st[0] = "s31";st[1] = "s32";st[2] = "s33";
+		g.addStep(st);
+		
+		tr = new String[3];
+		tr[0] = "tr31";tr[1] = "tr32";tr[2] = "tr33";
+		c = new String[1];
+		c2 = new String[1];
+		c3 = new String[1];
+		c[0] = "test4";c2[0] = "test5";c3[0] = "test6";
+		g.addTransition(tr, c,c2,c3);
+		
+		st = new String[1];
+		st[0] = "s41";
+		g.addFinalStep(st);
+		
+		tr = new String[1];
+		tr[0] = "tr4";
+		c = new String[1];
+		c[0] = "test4";
+		g.addFinalTransition(tr);
+		
+		/*g.getNodeTransition("tr31").getTransition().setCondition(new Bool(g.getNodeStep("s41").getActive().get()));
+		g.getNodeTransition("tr32").getTransition().setCondition(new Bool(g.getNodeStep("s41").getActive().get()));
+		g.getNodeTransition("tr33").getTransition().setCondition(new Bool(g.getNodeStep("s41").getActive().get()));*/
+
+		g.getNodeTransition("tr4").getTransition().setCondition(variable.condition.get("test4"));
+
 		/*NodeStep tt = g.getNodeStep("step4");
 		if(tt != null){System.out.println("tr1 ok");}
 		System.out.println(g.getNodeTransition("tr1").getTransi());*/
 		
-		//System.out.println(g.getLastTransition());
+		//currentStep = new NodeStep[nbMax];
+		
+		//System.out.println(g);
 		g.start();
-		
-		
+
+
 	}
-	
+
 	private NodeStep firstStep;
-	private NodeStep tmpStep;
+	private NodeStep tmpStep[];
 	private NodeTransition firstTransi;
-	private NodeTransition tmpTransi;
-	private NodeStep currentStep;
-	private NodeTransition currentTransition;
+	private NodeTransition tmpTransi[];
 	private static Variable variable;
-	private static Controller controller;
 	private boolean running = true;
-	
-	
-	public Grafcet(Step n){
-		
-		firstStep = new NodeStep(n);
-		firstStep.getStep().setInitial(true);
-		controller = new Controller(this);
+	private static int nbMax = 1;
+
+
+	public Grafcet(String s){
+
+		firstStep = new NodeStep(s);
+		firstStep.setInitial(true);
 		variable = new Variable();
+		variable.condition.put("test1", new Bool(false));
+		variable.condition.put("test2", new Bool(false));
+		variable.condition.put("test3", new Bool(false));
+		variable.condition.put("test4", new Bool(false));
+		variable.condition.put("test5", new Bool(false));
+		variable.condition.put("test6", new Bool(false));
 	}
 	public Grafcet(Variable v){
-		controller = new Controller(this);
 		if(v != null)
 			variable = v;
 		else{//mode test
@@ -60,12 +99,10 @@ public class Grafcet extends Thread {
 			variable.condition.put("auto", new Bool(false));
 		}
 	}
-	
+
 	public void run(){
-		firstStep.getStep().start();
-		currentStep = firstStep;
-		firstTransi.getTransi().start();
-		currentTransition = firstTransi;
+		firstStep.start();
+		firstTransi.setActive(true);;
 		while(running){
 			try {
 				Thread.sleep(5000);
@@ -74,146 +111,207 @@ public class Grafcet extends Thread {
 				e.printStackTrace();
 			}
 			System.out.println("10s");
-			//variable.condition.get("S_2_2.x").set(true);
-			
+			variable.condition.get("test1").set(true);
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("10s");
+			variable.condition.get("test6").set(true);
+			variable.condition.get("test3").set(true);
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("10s");
+			variable.condition.get("test2").set(true);
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("10s");
+			variable.condition.get("test4").set(true);
+			variable.condition.get("test5").set(true);
+
+
+
 		}
 	}
-	
-	public void next(){
-		currentStep = currentStep.getNextStep();
-		currentTransition = currentTransition.getNextTransition();
-		System.out.println("current : "+currentStep+" | "+currentTransition);
-	}
-	
+
 	/******************** Méthode d'ajout d'étape / transition***********************/
-	public void addStep(String name){
+	public void addStep(String name[]){
 		if(firstStep == null){
-			firstStep = new NodeStep(new Step(name));
-			firstStep.getStep().setInitial(true);
+			firstStep = new NodeStep(name[0]);
+			firstStep.setInitial(true);
 		}
 		else{
-			NodeStep node = new NodeStep(new Step(name));
-			NodeStep tmp = getLastStep();
-			tmp.setNextStep(node);
-			node.setPrevStep(tmp);
+			nbMax = name.length > nbMax ?  name.length : nbMax;
+			NodeStep node[] = new NodeStep[nbMax];
+			int c = 0;
+			for(String s : name){
+				node[c] = new NodeStep(s, c);
+				node[c].setPrevStep(getLastStep());
+				c++;
+			}
+			for(NodeStep t : getLastStep()){
+				if(t != null){
+					t.setNextStep(node);
+				}
+			}
 		}
 	}
-	public void addFinalStep(String name){
-		NodeStep node = new NodeStep(new Step(name));
-		NodeStep tmp = getLastStep();
-		tmp.setNextStep(node);
-		node.setPrevStep(tmp);
-		node.setNextStep(firstStep);
+	public void addFinalStep(String name[]){
+		nbMax = name.length > nbMax ?  name.length : nbMax;
+		NodeStep node[] = new NodeStep[nbMax];
+		NodeStep nodeInit[] = new NodeStep[1];
+		nodeInit[0] = firstStep;
+		int c = 0;
+		for(String s : name){
+			node[c] = new NodeStep(s, c);
+			node[c].setPrevStep(getLastStep());
+			node[c].setNextStep(nodeInit);
+			c++;
+		}
 		firstStep.setPrevStep(node);
+		for(NodeStep t : getLastStep()){
+			if(t != null){
+				t.setNextStep(node);
+			}
+		}
 	}
-	public void addTransition(String name, String ... cond ){
+	public void addTransition(String name[], String[] ... cond ){
 		Bool b;
-		NodeTransition transi;
-		
+		nbMax = name.length > nbMax ?  name.length : nbMax;
+		NodeTransition transi[] = new NodeTransition[name.length];
 		if(firstTransi == null){
-			firstTransi = new NodeTransition(new Transition(controller, name));
-			transi = firstTransi;
-			transi.getTransi().setInitial(true);
+			firstTransi = new NodeTransition(name[0], 1);
+			transi[0] = firstTransi;
+			transi[0].setInitial(true);
 		}
 		else{
-			transi = new NodeTransition(new Transition(controller, name));
-			NodeTransition tmp = getLastTransition();
-			tmp.setNextTransition(transi);
-			transi.setPrevTransition(tmp);
+			int c= 0;
+			for(String s : name){
+				transi[c] = new NodeTransition(s, name.length, c);
+				transi[c].setPrevTransition(getLastTransition());
+				c++;
+			}
+			for(NodeTransition t : getLastTransition()){
+				if(t != null)
+					t.setNextTransition(transi);
+			}			
 		}
-		
-		if(cond.length == 1){
-			if(cond[0].contains(".x")){
-				String s = cond[0].substring(0, cond[0].length()-2);
-				b = getNodeStep(s).getStep().getActive();
+		int c = 0;
+		//pour chaque transition
+		for(String s[] : cond){
+			//pour chaque condition
+			for(String ss : s){
+				if(ss.contains(".x")){
+					String p = ss.substring(0, ss.length()-2);
+					b = getNodeStep(p).getActive();
+				}
+				else{
+					b = variable.condition.get(ss);
+				}
+				transi[c].getTransition().setCondition(b);
 			}
-			else{
-				b = variable.condition.get(cond[0]);
-			}
-			transi.getTransi().setCondition(b);
+			c++;
 		}
 	}
-	public void addFinalTransition(String name){
-		if(firstTransi == null){}
-		else{
-			NodeTransition transi = new NodeTransition(new Transition(controller, name));
-			NodeTransition tmp = getLastTransition();
-			tmp.setNextTransition(transi);
-			transi.setPrevTransition(tmp);
-			transi.setNextTransition(firstTransi);
-			firstTransi.setPrevTransition(transi);
+	public void addFinalTransition(String name[]){
+		nbMax = name.length > nbMax ?  name.length : nbMax;
+		NodeTransition transi[] = new NodeTransition[name.length];
+		NodeTransition transiInit[] = new NodeTransition[1];
+		transiInit[0] = firstTransi;
+		int c = 0;
+		for(String s : name){
+			transi[c] = new NodeTransition(s, name.length, c);
+			transi[c].setPrevTransition(getLastTransition());
+			transi[c].setNextTransition(transiInit);
+			c++;
 		}
-	}	
-	
+		firstStep.setPrevTransition(transi);
+		for(NodeTransition t : getLastTransition()){
+			if(t != null){
+				t.setNextTransition(transi);
+			}
+		}
+	}
+
 	/******************** Méthode get ***********************/
 	public NodeStep getNodeStep(String name){
-		tmpStep = firstStep;
-		boolean b = true;
-		
+		tmpStep = new NodeStep[nbMax];
+		tmpStep[0] = firstStep;
+
 		do {
-			if(tmpStep.getStep().name.equals(name)){
-				return tmpStep;
-			}
-			else{
-				tmpStep = tmpStep.getNextStep();
-				if(tmpStep.getStep().isInitial()){
-					b = false;
-				}
-				else if(tmpStep.getStep().name.equals(name)){
-					return tmpStep;
+			for(NodeStep p : tmpStep){
+				if(p != null && p.getStep().name.equals(name)){
+					return p;
 				}
 			}
-		}while(tmpStep != getLastStep() && b);
+			tmpStep = tmpStep[0].getNextStep();
+		}while(!tmpStep[0].isInitial() && tmpStep[0].getNextStep() != null);
+		for(NodeStep p : tmpStep){
+			if(p.getStep().name.equals(name)){
+				return p;
+			}
+		}
 		return null;
 	}
 	public NodeTransition getNodeTransition(String name){
-		tmpTransi = firstTransi;
-		boolean b = true;
-				
+		tmpTransi = new NodeTransition[nbMax];
+		tmpTransi[0] =	firstTransi;
+
 		do {
-			if(tmpTransi.getTransi().name.equals(name)){
-				return tmpTransi;
-			}
-			else{
-				tmpTransi = tmpTransi.getNextTransition();
-				if(tmpTransi.getTransi().isInitial()){
-					b = false;
-				}
-				else if(tmpTransi.getTransi().name.equals(name)){
-					return tmpTransi;
+			for(NodeTransition t : tmpTransi){
+				if(t != null && t.getTransition().name.equals(name)){
+					return t;
 				}
 			}
-		}while(tmpTransi != getLastTransition() && b);
+			tmpTransi = tmpTransi[0].getNextTransition();
+		}while(!tmpTransi[0].isInitial() && tmpTransi[0].getNextTransition() != null);
+		for(NodeTransition t : tmpTransi){
+			if(t.getTransition().name.equals(name)){
+				return t;
+			}
+		}
 		return null;
 	}
-	
-	public NodeStep getLastStep(){
-		NodeStep tmp = firstStep;
+
+	public NodeStep[] getLastStep(){
+		tmpStep = new NodeStep[nbMax];
+		tmpStep[0] = firstStep;
 		boolean b = true;
-		while(tmp.getNextStep() != null && b)
+		while(tmpStep[0].getNextStep() != null && b)
 		{
-			tmp = tmp.getNextStep();
-			if(tmp.getStep().isInitial()){
+			tmpStep = tmpStep[0].getNextStep();
+			if(tmpStep[0].isInitial()){
 				b = false;
-				tmp = tmp.getPrevStep();
+				tmpStep = tmpStep[0].getPrevStep();
 			}
 		}
-		return tmp;
+		return tmpStep;
 	}
-	public NodeTransition getLastTransition(){
-		NodeTransition tmp = firstTransi;
+	public NodeTransition[] getLastTransition(){
+		tmpTransi = new NodeTransition[nbMax];
+		tmpTransi[0] = firstTransi;
 		boolean b = true;
-		while(tmp.getNextTransition() != null && b)
+		while(tmpTransi[0].getNextTransition() != null && b)
 		{
-			tmp = tmp.getNextTransition();
-			if(tmp == firstTransi){
+			tmpTransi = tmpTransi[0].getNextTransition();
+			if(tmpTransi[0].isInitial()){
 				b = false;
-				tmp = tmp.getPrevTransition();
+				tmpTransi = tmpTransi[0].getPrevTransition();
 			}
 		}
-		return tmp;
+		return tmpTransi;
 	}
-	
+
 	/******************** Méthode first ***********************/
 	public void setFirstStep(NodeStep first){
 		this.firstStep = first;
@@ -227,27 +325,46 @@ public class Grafcet extends Thread {
 	public NodeTransition getFirstTransi(){
 		return firstTransi;
 	}
-	
+
 	/******************** Méthode d'affichage ***********************/
 	public String toString(){
-		NodeStep tmp = firstStep;
-		NodeTransition tmp2 = firstTransi;
+		NodeStep tmp[] = new NodeStep[nbMax];
+		tmp[0] = firstStep;
+		NodeTransition tmp2[] = new NodeTransition[nbMax];
+		tmp2[0] = firstTransi;
 
 		String s = "";
 		do
 		{
-			s += tmp+"\n";
-			tmp = tmp.getNextStep();
-			s += tmp2+"\n";
-			tmp2 = tmp2.getNextTransition();
-			if(tmp != null && tmp.getNextStep() == null){
-				s += tmp+"\n";
+			for(NodeStep p : tmp){
+				if(p != null)
+					s += p.getStep().getName()+"  |  ";
+			}
+			s +="\n";
+			tmp = tmp[0].getNextStep();
+			for(NodeTransition t : tmp2){
+				if(t != null)
+					s += t.getTransition().getName()+"{"+t.getTransition().getCondition()+"}"+t.id+"  |  ";
+			}
+			s +="\n";
+			tmp2 = tmp2[0].getNextTransition();
+			
+			if(tmp != null && tmp[0].getNextStep() == null){
+				for(NodeStep p : tmp){
+					if(p != null)
+						s += p.getStep().getName()+"  |  ";
+				}
+				s +="\n";
 				if(tmp2 != null){
-					s += tmp2+"\n";
+					for(NodeTransition t : tmp2){
+						if(t != null)
+							s += t.getTransition().getName()+"  |  ";
+					}
+					s +="\n";
 				}
 			}
-		}while(tmp.getStep().isInitial() != true && tmp.getNextStep() != null);
-		
+		}while(tmp[0].isInitial() != true && tmp[0].getNextStep() != null);
+
 		return s;
 	}
 

@@ -3,43 +3,17 @@ package compilateur.grafcet;
 public class Step extends Composant{
 	
 	
-	public Step(String name){
+	public Step(String name, int ... id){
 		this.name = name;
+		if(id.length == 1)
+			this.id = id[0];
+		else
+			this.id = 0;
 	}
 	
-	public void run(){
-		active.set(true);
-		System.out.println("start step : "+name);
-	}
-	
-	public String getNom(){
+	public String getName(){
 		return this.name;
 	}
-	
-	
-	public void setActive(boolean b){
-		active.set(true);
-	}
-	
-	public boolean isActive(){
-		return active.get();
-	}
-	
-	public Bool getActive(){
-		return active;
-	}
-	
-	public void setInitial(boolean b){
-		initial = b;
-	}
-	
-	public boolean isInitial(){
-		return initial;
-	}
-	
-	
-	
-	
 	
 	
 }
