@@ -1,10 +1,8 @@
 package compilateur.grafcet;
 
-public abstract class Composant extends Thread {
+public abstract class Composant {
 	
 	public String name = "";
-	public Bool active = new Bool(false);
-	protected Controller c;
-	public boolean initial = false;
+	public int id;
 
 }
