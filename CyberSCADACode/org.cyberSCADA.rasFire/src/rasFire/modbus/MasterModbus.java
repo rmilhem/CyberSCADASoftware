@@ -316,7 +316,8 @@ public class MasterModbus {
 			return res.getCoils().toString();
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+		if(ex.getMessage().equals("Connection refused")) return ex.getMessage();
+		else ex.printStackTrace();
 		}
 		return "";
 	}

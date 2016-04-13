@@ -39,6 +39,7 @@ public class Firewall {
 	// renvoie si le message a été filtré ou non
 	public boolean filtrer(String msg) {
 
+		if(msg != null){
 		String modeTemp = msg.split(" ")[0];
 		boolean mode = false;
 		if (modeTemp.equals("0"))
@@ -54,7 +55,8 @@ public class Firewall {
 			boolean filtre = !ruleBase.isCorrect(mode, VariableAuto.valueOf(variable));
 			return filtre;
 		} else
-			return true;
+			return true;}
+		else return false;
 	}
 
 	public String convModbus(String msg){
