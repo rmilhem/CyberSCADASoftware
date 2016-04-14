@@ -8,7 +8,6 @@ public abstract class NodeComposant extends Thread {
 	protected NodeStep prevStep[];
 	
 	public Bool active = new Bool(false);
-	public boolean end = false;
 	
 	public boolean initial = false;
 	
@@ -28,6 +27,10 @@ public abstract class NodeComposant extends Thread {
 	
 	public void setActive(boolean b){
 		active.set(b);
+	}
+
+	public boolean isActive(){
+		return active.get();
 	}
 	
 	public int getID(){

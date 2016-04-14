@@ -25,7 +25,11 @@ public class Transition extends Composant{
 	}
 	
 	public boolean isTrue(){
-		return condition.get();
+		boolean bb = true;
+		for(Bool b : condition.b){
+			bb = bb && b.get();
+		}
+		return bb;
 	}
 
 }

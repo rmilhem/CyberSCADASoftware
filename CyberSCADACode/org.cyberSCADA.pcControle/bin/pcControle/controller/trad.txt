@@ -1,0 +1,23 @@
+Automate Bouchons	Caps Automaton
+Capteur Tube	Tube Sensor
+Stock Bouchons	Caps Storage
+Boucher	Cap
+Automates Balles	Balls Automaton
+Actionneur Haut	Upper Actuator
+Actionneur BAs	Lower Actuator
+Actionneur Balles	Balls Actuator
+Remplir	Fill
+Tube sur Plateau	Tube on Plate
+Stock Tubes	Tubes Storage
+Automate Tubes	Tubes Automaton
+Ac Pinces	Clamps Actuator
+IHM CyberSCADA	CyberSCADA GUI
+En Rotation	Rotating
+Marche/Arrêt	On/Off
+En Marche	Running
+Tourner	Rotate
+Quitter	Quit
+Tubes Remplis:	Filled Tubes:
+Oui/Rempli	Yes/Full
+Non/Vide	No/Empty
+Erreur	Error

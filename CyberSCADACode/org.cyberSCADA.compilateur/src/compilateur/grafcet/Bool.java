@@ -3,6 +3,7 @@ package compilateur.grafcet;
 public class Bool {
 	
 	public boolean bool;
+	public Bool b[];
 	
 	public Bool(boolean b, boolean ... bb){
 		bool = b;
@@ -10,6 +11,14 @@ public class Bool {
 		for(boolean i : bb){
 			bool = bool && i;
 		}
+	}
+	
+	public Bool(boolean b){
+		bool = b;
+	}
+	
+	public Bool(Bool bool[]){
+		b = bool;
 	}
 	
 	public void set(boolean b){

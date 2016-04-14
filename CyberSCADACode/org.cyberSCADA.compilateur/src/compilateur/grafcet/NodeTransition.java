@@ -7,17 +7,12 @@ public class NodeTransition extends NodeComposant{
 
 	public int wide;
 
-	public NodeTransition(String name, int w, int ... id){
+	public NodeTransition(String name){
 		this.transi = new Transition(name);
-		wide = w;
 		nextTransi = null;
 		prevTransi = null;
 		nextStep = null;
 		prevStep = null;
-		if(id.length == 1)
-			this.id = id[0];
-		else
-			this.id = 0;
 		this.start();
 	}
 
@@ -30,52 +25,30 @@ public class NodeTransition extends NodeComposant{
 			}
 			if(active.get()){
 				System.out.println("start transi : "+transi.name);
-				while(!transi.isTrue()){
+				while(!transi.isTrue() && active.get()){
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-				System.out.println("fin transi : "+transi.name);
+				
+				if(active.get()){
+					for(NodeStep p : nextStep){
+						p.setActive(true);
+						System.out.println(p.getStep().getName()+" set true");
+					}
+					for(NodeStep p : prevStep){
+						p.setActive(false);
+						System.out.println(p.getStep().getName()+" set false");
+					}
+				}
 				active.set(false);
-				end = true;
-
-				if(nextTransi.length > wide){
-					for(NodeTransition t : nextTransi){
-						t.setActive(true);;
-					}
-				}
-				else if(nextTransi.length == wide){
-					nextTransi[id].setActive(true);;
-				}
-				else{
-					if(id == 0){
-						boolean b[] = new boolean[wide];
-						boolean bbb = false;
-						int c = 0;
-						while(!bbb){
-							c = 0;
-							for(NodeTransition t : nextTransi[0].getPrevTransition()){
-								b[c] = t.end;
-								c++;
-							}
-							for(boolean bb : b){
-								bbb = bbb | bb;
-							}
-							try {
-								Thread.sleep(100);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-						nextTransi[0].setActive(true);;
-					}
-				}
+				System.out.println("fin transi : "+transi.name);
 			}
 		}
 	}
-
+	
 	public Transition getTransition(){
 		return transi;
 	}

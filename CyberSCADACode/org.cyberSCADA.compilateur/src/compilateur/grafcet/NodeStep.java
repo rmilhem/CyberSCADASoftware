@@ -16,22 +16,37 @@ public class NodeStep extends NodeComposant{
 			this.id = id[0];
 		else
 			this.id = 0;
+		this.start();
 	}
 	
 	public void run(){
-		System.out.println("start step : "+step.name);
-		
-		active.set(true);
-		this.interrupt();
-	}
-	
-	
-	public Bool getActive(){
-		return active;
-	}
-	
-	public boolean isActive(){
-		return active.get();
+		while(true){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if(active.get()){
+				System.out.println("start step : "+step.name);
+				
+				for(NodeTransition t : nextTransi){
+					t.setActive(true);
+				}
+				while(active.get()){
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				for(NodeTransition t : nextTransi){
+					t.setActive(false);
+				}
+
+				//System.out.println("fin step : "+step.name);
+			}
+		}
 	}
 	
 	public Step getStep(){
