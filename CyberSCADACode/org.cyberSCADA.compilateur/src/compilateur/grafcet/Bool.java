@@ -5,14 +5,6 @@ public class Bool {
 	public boolean bool;
 	public Bool b[];
 	
-	public Bool(boolean b, boolean ... bb){
-		bool = b;
-		
-		for(boolean i : bb){
-			bool = bool && i;
-		}
-	}
-	
 	public Bool(boolean b){
 		bool = b;
 	}

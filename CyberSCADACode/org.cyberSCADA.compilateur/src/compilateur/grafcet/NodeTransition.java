@@ -2,20 +2,22 @@ package compilateur.grafcet;
 
 public class NodeTransition extends NodeComposant{
 
-
-	public Transition transi;
-
-	public int wide;
+	private Transition transi;
+	
+	protected NodeStep nextStep[];
+	protected NodeStep prevStep[];
 
 	public NodeTransition(String name){
 		this.transi = new Transition(name);
-		nextTransi = null;
-		prevTransi = null;
 		nextStep = null;
 		prevStep = null;
 		this.start();
 	}
-
+	/**
+	 * A transition is always running
+	 * but it is waiting for the condition only when it is "active"
+	 * At the end, it activate its next steps and disactivate its previous steps
+	 */
 	public void run(){
 		while(true){
 			try {
@@ -36,15 +38,13 @@ public class NodeTransition extends NodeComposant{
 				if(active.get()){
 					for(NodeStep p : nextStep){
 						p.setActive(true);
-						System.out.println(p.getStep().getName()+" set true");
 					}
 					for(NodeStep p : prevStep){
 						p.setActive(false);
-						System.out.println(p.getStep().getName()+" set false");
 					}
 				}
 				active.set(false);
-				System.out.println("fin transi : "+transi.name);
+				//System.out.println("fin transi : "+transi.name);
 			}
 		}
 	}
@@ -53,28 +53,12 @@ public class NodeTransition extends NodeComposant{
 		return transi;
 	}
 
-	public NodeTransition[] getPrevTransition(){
-		return prevTransi;
-	}
-
-	public NodeTransition[] getNextTransition(){
-		return nextTransi;
-	}
-
 	public NodeStep[] getPrevStep(){
 		return prevStep;
 	}
 
 	public NodeStep[] getNextStep(){
 		return nextStep;
-	}
-
-	public void setPrevTransition(NodeTransition prev[]){
-		this.prevTransi = prev;
-	}
-
-	public void setNextTransition(NodeTransition next[]){
-		this.nextTransi = next;
 	}
 
 	public void setPrevStep(NodeStep prev[]){
@@ -86,6 +70,6 @@ public class NodeTransition extends NodeComposant{
 	}
 
 	public String toString(){
-		return transi.name;
+		return transi.getName();
 	}
 }

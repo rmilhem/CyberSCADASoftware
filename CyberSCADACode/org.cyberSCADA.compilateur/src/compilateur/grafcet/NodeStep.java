@@ -5,20 +5,23 @@ public class NodeStep extends NodeComposant{
 
 	private Step step;
 	
-	public NodeStep(String name, int ... id){
+	protected NodeTransition nextTransi[];
+	protected NodeTransition prevTransi[];
+	
+	public NodeStep(String name){
 		step = new Step(name);
 		
-		nextStep = null;
-		prevStep = null;
 		nextTransi = null;
 		prevTransi = null;
-		if(id.length == 1)
-			this.id = id[0];
-		else
-			this.id = 0;
+		
 		this.start();
 	}
 	
+	/**
+	 * A step is always running
+	 * but it is waiting for the condition only when it is "active"
+	 * At the end, it disactivate its next transitions
+	 */
 	public void run(){
 		while(true){
 			try {
@@ -48,7 +51,7 @@ public class NodeStep extends NodeComposant{
 			}
 		}
 	}
-	
+
 	public Step getStep(){
 		return step;
 	}
@@ -61,28 +64,12 @@ public class NodeStep extends NodeComposant{
 		return nextTransi;
 	}
 	
-	public NodeStep[] getPrevStep(){
-		return prevStep;
-	}
-	
-	public NodeStep[] getNextStep(){
-		return nextStep;
-	}
-	
 	public void setPrevTransition(NodeTransition prev[]){
 		this.prevTransi = prev;
 	}
 	
 	public void setNextTransition(NodeTransition next[]){
 		this.nextTransi = next;
-	}
-	
-	public void setPrevStep(NodeStep prev[]){
-		this.prevStep = prev;
-	}
-	
-	public void setNextStep(NodeStep next[]){
-		this.nextStep = next;
 	}
 	
 	public String toString(){

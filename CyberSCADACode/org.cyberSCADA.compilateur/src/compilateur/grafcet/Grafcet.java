@@ -1,28 +1,28 @@
 package compilateur.grafcet;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
 
-public class Grafcet extends Thread {
+public class Grafcet extends Thread{
 	
-	private NodeStep firstStep;
-	private NodeStep tmpStep[];
-	private NodeTransition firstTransi;
-	private NodeTransition tmpTransi[];
-	private static Variable variable;
-	private boolean running = true;
-	private static int nbMax = 1;
-	private static Hashtable<String, NodeComposant> collection;
+	protected Variable variable;
+	private GrafcetMethods gm;
+	protected Hashtable<String, NodeComposant> collection;
+	protected boolean running = true;
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 		String st[];String tr[];String c[];
-		Grafcet g = new Grafcet("step1");
+		Grafcet g = new Grafcet();
+		
+		g.addStep(null, "step1");
+		
 		String c2[], c3[];
 		
 		st = new String[1];
-		st[0] = "step1";
+		st[0] = "step1";//st[1] = "step2";st[2] = "step3";
 		tr = new String[3];
 		tr[0] = "tr11";tr[1] = "tr12";tr[2] = "tr13";
 		c = new String[1];c[0] = "test1";
@@ -47,41 +47,19 @@ public class Grafcet extends Thread {
 		g.addStep(tr, st);
 		
 		g.addFinalTransition("s3", "tr3", "test7");
-		
 		g.start();
 	}
-
-
-
-	public Grafcet(String s){
-		collection = new Hashtable<String, NodeComposant>();
-		firstStep = new NodeStep(s);
-		collection.put(s, firstStep);
-		firstStep.setInitial(true);
-		variable = new Variable();
 	
-		variable.condition.put("test1", new Bool(false));
-		variable.condition.put("test2", new Bool(false));
-		variable.condition.put("test3", new Bool(false));
-		variable.condition.put("test4", new Bool(false));
-		variable.condition.put("test5", new Bool(false));
-		variable.condition.put("test6", new Bool(false));
-		variable.condition.put("test7", new Bool(false));
-	}
-	public Grafcet(Variable v){
-		if(v != null)
-			variable = v;
-		else{//mode test
-			variable = new Variable();
-			variable.condition.put("s_2_2.x", new Bool(false));
-			variable.condition.put("index", new Bool(false));
-			variable.condition.put("auto", new Bool(false));
-		}
-	}
-
 	public void run(){
-		firstStep.setActive(true);
-		//firstTransi.setActive(true);;
+		//Launch the first step of the grafcet
+		Enumeration<String> en = collection.keys();
+		while(en.hasMoreElements()){
+			NodeComposant tmp = collection.get(en.nextElement());
+			if(tmp.isInitial()){
+				tmp.setActive(true);
+				break;
+			}
+		}
 		while(running){
 			try {
 				Thread.sleep(5000);
@@ -129,282 +107,176 @@ public class Grafcet extends Thread {
 		}
 	}
 
-	/******************** Méthode d'ajout d'étape / transition***********************/
+	public Grafcet(){
+		collection = new Hashtable<String, NodeComposant>();
+		//firstStep = new NodeStep(s);
+		//collection.put(s, firstStep);
+		//firstStep.setInitial(true);
+		variable = new Variable();
+		gm = new GrafcetMethods(collection, variable);
+	
+		variable.condition.put("test1", new Bool(false));
+		variable.condition.put("test2", new Bool(false));
+		variable.condition.put("test3", new Bool(false));
+		variable.condition.put("test4", new Bool(false));
+		variable.condition.put("test5", new Bool(false));
+		variable.condition.put("test6", new Bool(false));
+		variable.condition.put("test7", new Bool(false));
+	}
+	public Grafcet(Variable v){
+		if(v != null)
+			variable = v;
+		else{//mode test
+			variable = new Variable();
+			variable.condition.put("s_2_2.x", new Bool(false));
+			variable.condition.put("index", new Bool(false));
+			variable.condition.put("auto", new Bool(false));
+		}
+	}
+
+	
+	
+	/******************** Méthode d'ajout d'étape***********************/
+	/**
+	 * Add steps "name" at transitions "prev"
+	 * "prev" = 1 and "name" > 1 = Divergence ET
+	 * "prev" > 1 and "name" = 1 = Convergence OU
+	 * @param prev
+	 * @param name
+	 */
 	public void addStep(String prev[], String name[]){
-		int c = 0;
-		if(prev == null){
-			firstStep = new NodeStep(name[0]);
-			firstStep.setInitial(true);
-			collection.put(name[0], firstStep);
-		}
-		else{
-			//debut ET ou suite normale
-			if(prev.length == 1){
-				tmpStep = new NodeStep[name.length];
-				for(String s : name){
-					tmpStep[c] = new NodeStep(s, 0);
-					tmpTransi = new NodeTransition[1];
-					tmpTransi[0] = getNodeTransition(prev[0]);
-					
-					tmpStep[c].setPrevTransition(tmpTransi);
-					collection.put(s, tmpStep[c]);
-					c++;
-				}
-				tmpTransi[0].setNextStep(tmpStep);
-			}
-			//fin OU
-			else if(name.length == 1){
-				tmpStep = new NodeStep[1];
-				tmpStep[0] = new NodeStep(name[0], 0);
-				collection.put(name[0], tmpStep[0]);
-				tmpTransi = new NodeTransition[prev.length];
-				for(String s : prev){
-					tmpTransi[c] = getNodeTransition(s);
-					tmpTransi[c].setNextStep(tmpStep);
-					c++;
-				}
-				tmpStep[0].setPrevTransition(tmpTransi);
-			}
-			else{
-				
-			}
+		try {
+			gm.addS(prev, name);
+		} catch (SyntaxGrafcetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+	/**
+	 * Add step "name" at transition "prev"
+	 * for a grafcet with one branch
+	 * @param prev
+	 * @param name
+	 */
 	public void addStep(String prev, String name){
-		if(prev == null){
-			firstStep = new NodeStep(name);
-			firstStep.setInitial(true);
-			collection.put(name, firstStep);
-		}
-		else{
-			//suite normale
-			tmpStep = new NodeStep[1];
-			tmpStep[0] = new NodeStep(name, 0);
-			tmpTransi = new NodeTransition[1];
-			tmpTransi[0] = getNodeTransition(prev);
-
-			tmpStep[0].setPrevTransition(tmpTransi);
-			collection.put(name, tmpStep[0]);
-			tmpTransi[0].setNextStep(tmpStep);
+		try {
+			gm.addS(prev, name);
+		} catch (SyntaxGrafcetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+	
+	/******************** Méthode d'ajout de transition***********************/
+	/**
+	 * Add transitions "name" at steps "prev" with the conditions "cond"
+	 * "prev" = 1 and "name" > 1 = Divergence OU
+	 * "prev" > 1 and "name" = 1 = Convergence ET
+	 * ex : addTransition(prev[], name[], cond1[], cond2[])
+	 * add "cond1" to the first transition of "name" with a logical AND between the values of "cond1"
+	 * @param prev
+	 * @param name
+	 * @param cond
+	 */
 	public void addTransition(String prev[], String name[], String[] ... cond ){
-		int c = 0;
-		if(prev == null){
-			firstStep = new NodeStep(name[0]);
-			firstStep.setInitial(true);
-			collection.put(name[0], firstStep);
-		}
-		else{
-			//debut OU ou suite normale
-			if(prev.length == 1){
-				tmpTransi = new NodeTransition[name.length];
-				for(String s : name){
-					tmpTransi[c] = new NodeTransition(s);
-					tmpStep = new NodeStep[1];
-					tmpStep[0] = getNodeStep(prev[0]);
-					
-					tmpTransi[c].setPrevStep(tmpStep);
-					collection.put(s, tmpTransi[c]);
-					c++;
-				}
-				if(tmpStep[0] == null)
-					System.out.println("probleme");
-				tmpStep[0].setNextTransition(tmpTransi);
-			}
-			//fin ET
-			else if(name.length == 1){
-				tmpTransi = new NodeTransition[1];
-				tmpTransi[0] = new NodeTransition(name[0]);
-				collection.put(name[0], tmpTransi[0]);
-				tmpStep = new NodeStep[prev.length];
-				for(String s : prev){
-					tmpStep[c] = getNodeStep(s);
-					tmpStep[c].setNextTransition(tmpTransi);
-					c++;
-				}
-				tmpTransi[0].setPrevStep(tmpStep);
-			}
-			else{
-				
-			}
-		}
-		
-		c = 0;
-		int d = 0;
-		//pour chaque transition
-		for(String s[] : cond){
-			//pour chaque condition
-			Bool b[] = new Bool[s.length];
-			for(String ss : s){
-				if(ss.contains(".x")){
-					String p = ss.substring(0, ss.length()-2);
-					b[d] = getNodeStep(p).getActive();
-				}
-				else{
-					b[d] = variable.condition.get(ss);
-				}
-				d++;
-			}
-			d = 0;
-			getNodeTransition(name[c]).getTransition().setCondition(new Bool(b));
-			c++;
+		try {
+			gm.addT(prev, name, cond);
+		} catch (SyntaxGrafcetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+	/**
+	 *  Add transition "name" at step "prev" with the condition "cond"
+	 * for a grafcet with one branch
+	 * ex : addTransition(prev[], name[], cond[])
+	 * add "cond" to the transition "name" with a logical AND between the values of "cond"
+	 * @param prev
+	 * @param name
+	 * @param cond
+	 */
 	public void addTransition(String prev, String name, String ... cond ){
-		if(prev == null){
-			firstStep = new NodeStep(name);
-			firstStep.setInitial(true);
-			collection.put(name, firstStep);
+		try {
+			gm.addT(prev, name, cond);
+		} catch (SyntaxGrafcetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		else{
-			//suite normale
-			tmpTransi = new NodeTransition[1];
-			tmpTransi[0] = new NodeTransition(name);
-			tmpStep = new NodeStep[1];
-			tmpStep[0] = getNodeStep(prev);
-
-			tmpTransi[0].setPrevStep(tmpStep);
-			collection.put(name, tmpTransi[0]);
-			
-			tmpStep[0].setNextTransition(tmpTransi);
-		}
-
-		int d = 0;
-			Bool b[] = new Bool[cond.length];
-			//pour chaque condition
-			for(String ss : cond){
-				if(ss.contains(".x")){
-					String p = ss.substring(0, ss.length()-2);
-					b[d] = getNodeStep(p).getActive();
-				}
-				else{
-					b[d] = variable.condition.get(ss);
-				}
-				d++;
-			}
-			getNodeTransition(name).getTransition().setCondition(new Bool(b));
 	}
+	/**
+	 * Add the final transitions "name" at steps "prev" with the conditions "cond"
+	 * "prev" = 1 and "name" > 1 = Divergence OU
+	 * "prev" > 1 and "name" = 1 = Convergence ET
+	 * ex : addFinalTransition(prev[], name[], cond1[], cond2[])
+	 * add "cond1" to the first transition of "name" with a logical AND between the values of "cond1"
+	 * and connect transitions with the initial step of the grafcet to make a loop
+	 * @param prev
+	 * @param name
+	 * @param cond
+	 */
 	public void addFinalTransition(String prev[], String name[], String[] ... cond){
-		int c = 0;
-		//a fusionner
-		//suite normale
-		if(prev.length == 1 && name.length == 1){
-			tmpTransi = new NodeTransition[1];
-			tmpTransi[0] = new NodeTransition(name[0]);
-			tmpStep = new NodeStep[1];
-			tmpStep[0] = getNodeStep(prev[0]);
-
-			tmpTransi[0].setPrevStep(tmpStep);
-			collection.put(name[0], tmpTransi[c]);
-			tmpStep[0].setNextTransition(tmpTransi);
-			
-			tmpStep = new NodeStep[1];
-			tmpStep[0] = firstStep;
-			tmpTransi[0].setNextStep(tmpStep);
-			firstStep.setPrevTransition(tmpTransi);
-		}
-		//fin ET
-		else if(name.length == 1){
-			tmpTransi = new NodeTransition[1];
-			tmpTransi[0] = new NodeTransition(name[0]);
-			collection.put(name[0], tmpTransi[0]);
-			for(String s : prev){
-				tmpStep = new NodeStep[1];
-				tmpStep[c] = getNodeStep(s);
-				tmpStep[c].setNextTransition(tmpTransi);
-				c++;
-			}
-			tmpTransi[0].setPrevStep(tmpStep);
-			
-			tmpStep = new NodeStep[1];
-			tmpTransi = new NodeTransition[1];
-			tmpStep[0] = firstStep;
-			tmpTransi[0].setNextStep(tmpStep);
-			firstStep.setNextTransition(tmpTransi);
-		}
-		else{
-
-		}
-		
-		c = 0;
-		int d = 0;
-		//pour chaque transition
-		for(String s[] : cond){
-			//pour chaque condition
-			Bool b[] = new Bool[s.length];
-			for(String ss : s){
-				if(ss.contains(".x")){
-					String p = ss.substring(0, ss.length()-2);
-					b[d] = getNodeStep(p).getActive();
-				}
-				else{
-					b[d] = variable.condition.get(ss);
-				}
-				d++;
-			}
-			d = 0;
-			getNodeTransition(name[c]).getTransition().setCondition(new Bool(b));
-			c++;
+		try {
+			gm.addFT(prev, name, cond);
+		} catch (SyntaxGrafcetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+	/**
+	 * Add transition "name" at step "prev" with the condition "cond"
+	 * for a grafcet with one branch
+	 * ex : addTransition(prev[], name[], cond[])
+	 * add "cond" to the transition "name" with a logical AND between the values of "cond"
+	 * and connect transition with the initial step of the grafcet to make a loop
+	 * @param prev
+	 * @param name
+	 * @param cond
+	 */
 	public void addFinalTransition(String prev, String name, String ... cond){
-		//suite normale
-		tmpTransi = new NodeTransition[1];
-		tmpTransi[0] = new NodeTransition(name);
-		tmpStep = new NodeStep[1];
-		tmpStep[0] = getNodeStep(prev);
-
-		tmpTransi[0].setPrevStep(tmpStep);
-		collection.put(name, tmpTransi[0]);
-
-		tmpStep[0].setNextTransition(tmpTransi);
-		
-		tmpStep = new NodeStep[1];
-		tmpStep[0] = firstStep;
-		tmpTransi[0].setNextStep(tmpStep);
-		tmpStep[0].setPrevTransition(tmpTransi);
-
-		int d = 0;
-		Bool b[] = new Bool[cond.length];
-			//pour chaque condition
-			for(String ss : cond){
-				if(ss.contains(".x")){
-					String p = ss.substring(0, ss.length()-2);
-					b[d] = getNodeStep(p).getActive();
-				}
-				else{
-					b[d] = variable.condition.get(ss);
-				}
-				d++;
-			}
-			getNodeTransition(name).getTransition().setCondition(new Bool(b));
+		try {
+			gm.addFT(prev, name, cond);
+		} catch (SyntaxGrafcetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/******************** Méthode get ***********************/
 	public NodeStep getNodeStep(String name){
-		return (NodeStep) collection.get(name);
+		try {
+			return gm.getNS(name);
+		} catch (SyntaxGrafcetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	public NodeTransition getNodeTransition(String name){
-		return (NodeTransition) collection.get(name);
+		try {
+			return gm.getNT(name);
+		} catch (SyntaxGrafcetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/******************** Méthode first ***********************/
 	public void setFirstStep(NodeStep first){
-		this.firstStep = first;
+		gm.setFirstStep(first);
 	}
 	public NodeStep getFirstStep(){
-		return firstStep;
+		return gm.getFirstStep();
 	}
 	public void setFirstTransi(NodeTransition first){
-		this.firstTransi = first;
+		gm.setFirstTransi(first);
 	}
 	public NodeTransition getFirstTransi(){
-		return firstTransi;
+		return gm.getFirstTransi();
 	}
 
 	/******************** Méthode d'affichage ***********************/
-	public String toString(){
+	/*public String toString(){
 		NodeStep tmp[] = new NodeStep[nbMax];
 		tmp[0] = firstStep;
 		NodeTransition tmp2[] = new NodeTransition[nbMax];
@@ -443,6 +315,6 @@ public class Grafcet extends Thread {
 		}while(tmp[0].isInitial() != true && tmp[0].getNextStep() != null);
 
 		return s;
-	}
+	}*/
 
 }
