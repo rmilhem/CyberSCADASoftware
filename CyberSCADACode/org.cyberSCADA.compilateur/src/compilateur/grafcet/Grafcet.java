@@ -50,16 +50,73 @@ public class Grafcet extends Thread{
 		g.start();
 	}
 	
+	public void build(){
+		String st[];String tr[];String c[];
+		
+		addStep(null, "step1", 5,1);
+		
+		String c2[], c3[];
+		
+		st = new String[1];
+		st[0] = "step1";//st[1] = "step2";st[2] = "step3";
+		tr = new String[3];
+		tr[0] = "tr11";tr[1] = "tr12";tr[2] = "tr13";
+		c = new String[1];c[0] = "test1";
+		c2 = new String[1];c2[0] = "test2";
+		c3 = new String[1];c3[0] = "test3";
+		addTransition(st, tr, c, c2, c3);	
+		getNodeTransition("tr11").setX(3);
+		getNodeTransition("tr12").setX(5);
+		getNodeTransition("tr13").setX(7);
+		getNodeTransition("tr11").setY(2);
+		getNodeTransition("tr12").setY(2);
+		getNodeTransition("tr13").setY(2);
+
+		st = new String[3];
+		st[0] = "s21";st[1] = "s22";st[2] = "s23";
+		addStep("tr11", st[0], 3,3);
+		addStep("tr12", st[1],5,3);
+		addStep("tr13", st[2],7,3);
+		
+		addTransition("s21", "tr21", "test4");
+		addTransition("s22", "tr22", "test5");
+		addTransition("s23", "tr23", "test6");
+		getNodeTransition("tr21").setX(3);
+		getNodeTransition("tr22").setX(5);
+		getNodeTransition("tr23").setX(7);
+		getNodeTransition("tr21").setY(4);
+		getNodeTransition("tr22").setY(4);
+		getNodeTransition("tr23").setY(4);
+		
+		tr = new String[3];
+		tr[0] = "tr21";tr[1] = "tr22";tr[2] = "tr23";
+		st = new String[1];
+		st[0] = "s3";
+		int in[] = new int[2];int in2[] = new int[2];int in3[] = new int[2];
+		in[0]=3;in[1]=5;
+		in2[0]=5;in2[1]=5;
+		in3[0]=7;in3[1]=5;
+		addStep(tr, st,in2);
+		
+		addFinalTransition("s3", "tr3", "test7");
+		getNodeTransition("tr3").setX(5);
+		getNodeTransition("tr3").setY(6);
+	}
+	
 	public void run(){
 		//Launch the first step of the grafcet
+		NodeStep st = null;
 		Enumeration<String> en = collection.keys();
 		while(en.hasMoreElements()){
 			NodeComposant tmp = collection.get(en.nextElement());
 			if(tmp.isInitial()){
-				tmp.setActive(true);
-				break;
+				st = (NodeStep) tmp;
 			}
+			Thread t = new Thread(tmp);
+			t.start();
 		}
+		
+		st.setActive(true);
 		while(running){
 			try {
 				Thread.sleep(5000);
@@ -109,9 +166,6 @@ public class Grafcet extends Thread{
 
 	public Grafcet(){
 		collection = new Hashtable<String, NodeComposant>();
-		//firstStep = new NodeStep(s);
-		//collection.put(s, firstStep);
-		//firstStep.setInitial(true);
 		variable = new Variable();
 		gm = new GrafcetMethods(collection, variable);
 	
@@ -123,6 +177,8 @@ public class Grafcet extends Thread{
 		variable.condition.put("test6", new Bool(false));
 		variable.condition.put("test7", new Bool(false));
 	}
+	
+	//!\A revoir pour le compilateur /!\\
 	public Grafcet(Variable v){
 		if(v != null)
 			variable = v;
@@ -144,9 +200,9 @@ public class Grafcet extends Thread{
 	 * @param prev
 	 * @param name
 	 */
-	public void addStep(String prev[], String name[]){
+	public void addStep(String prev[], String name[], int[] ... coord){
 		try {
-			gm.addS(prev, name);
+			gm.addS(prev, name, coord);
 		} catch (SyntaxGrafcetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -158,9 +214,9 @@ public class Grafcet extends Thread{
 	 * @param prev
 	 * @param name
 	 */
-	public void addStep(String prev, String name){
+	public void addStep(String prev, String name, int ... coord){
 		try {
-			gm.addS(prev, name);
+			gm.addS(prev, name, coord);
 		} catch (SyntaxGrafcetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -178,7 +234,7 @@ public class Grafcet extends Thread{
 	 * @param name
 	 * @param cond
 	 */
-	public void addTransition(String prev[], String name[], String[] ... cond ){
+	public void addTransition(String prev[], String name[], String[] ... cond){
 		try {
 			gm.addT(prev, name, cond);
 		} catch (SyntaxGrafcetException e) {
@@ -273,6 +329,14 @@ public class Grafcet extends Thread{
 	}
 	public NodeTransition getFirstTransi(){
 		return gm.getFirstTransi();
+	}
+	
+	public Hashtable<String, NodeComposant> getCollection(){
+		return collection;
+	}
+	
+	public boolean getRunning(){
+		return running;
 	}
 
 	/******************** Méthode d'affichage ***********************/

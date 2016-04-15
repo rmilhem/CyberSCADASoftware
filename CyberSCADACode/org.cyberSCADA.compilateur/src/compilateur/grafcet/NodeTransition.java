@@ -1,17 +1,20 @@
 package compilateur.grafcet;
 
-public class NodeTransition extends NodeComposant{
+public class NodeTransition extends NodeComposant implements Runnable{
 
 	private Transition transi;
 	
 	protected NodeStep nextStep[];
 	protected NodeStep prevStep[];
 
-	public NodeTransition(String name){
+	public NodeTransition(String name, int ... coord){
 		this.transi = new Transition(name);
 		nextStep = null;
 		prevStep = null;
-		this.start();
+		if(coord.length == 2){
+			x = coord[0];
+			y = coord[1];
+		}
 	}
 	/**
 	 * A transition is always running
@@ -19,11 +22,21 @@ public class NodeTransition extends NodeComposant{
 	 * At the end, it activate its next steps and disactivate its previous steps
 	 */
 	public void run(){
+		setChanged();
+		notifyObservers(false);
 		while(true){
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+			}
+			if(transi.isTrue()){
+				setChanged();
+				notifyObservers(true);
+			}
+			else{
+				setChanged();
+				notifyObservers(false);
 			}
 			if(active.get()){
 				System.out.println("start transi : "+transi.name);
@@ -71,5 +84,10 @@ public class NodeTransition extends NodeComposant{
 
 	public String toString(){
 		return transi.getName();
+	}
+	@Override
+	public String getNom() {
+		// TODO Auto-generated method stub
+		return getTransition().getName();
 	}
 }

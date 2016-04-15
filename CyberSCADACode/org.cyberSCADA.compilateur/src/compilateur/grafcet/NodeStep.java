@@ -8,13 +8,16 @@ public class NodeStep extends NodeComposant{
 	protected NodeTransition nextTransi[];
 	protected NodeTransition prevTransi[];
 	
-	public NodeStep(String name){
+	public NodeStep(String name, int ... coord){
 		step = new Step(name);
 		
 		nextTransi = null;
 		prevTransi = null;
 		
-		this.start();
+		if(coord.length == 2){
+			x = coord[0];
+			y = coord[1];
+		}
 	}
 	
 	/**
@@ -23,15 +26,20 @@ public class NodeStep extends NodeComposant{
 	 * At the end, it disactivate its next transitions
 	 */
 	public void run(){
+		setChanged();
+		notifyObservers(false);
 		while(true){
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			setChanged();
+			notifyObservers(false);
 			if(active.get()){
 				System.out.println("start step : "+step.name);
-				
+				setChanged();
+				notifyObservers(true);
 				for(NodeTransition t : nextTransi){
 					t.setActive(true);
 				}
@@ -47,6 +55,8 @@ public class NodeStep extends NodeComposant{
 					t.setActive(false);
 				}
 
+				setChanged();
+				notifyObservers(false);
 				//System.out.println("fin step : "+step.name);
 			}
 		}
@@ -74,5 +84,11 @@ public class NodeStep extends NodeComposant{
 	
 	public String toString(){
 		return step.getName();
+	}
+
+	@Override
+	public String getNom() {
+		// TODO Auto-generated method stub
+		return getStep().getName();
 	}
 }

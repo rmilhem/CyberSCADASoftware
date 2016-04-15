@@ -3,27 +3,32 @@ package compilateur.grafcet;
 import java.util.Hashtable;
 
 public class GrafcetMethods {
-	
+
 	private Hashtable<String, NodeComposant> collection;
 	private Variable variable;
 	private NodeStep tmpStep[];
 	private NodeTransition tmpTransi[];
 	private NodeStep firstStep;
 	private NodeTransition firstTransi;
-	
+
 	public GrafcetMethods(Hashtable<String, NodeComposant> c, Variable v) {
 		this.collection = c;
 		this.variable = v;
 	}
-	
-	
 
-	public void addS(String prev[], String name[]) throws SyntaxGrafcetException{
+
+
+	public void addS(String prev[], String name[], int[] ... coord) throws SyntaxGrafcetException{
 		int c = 0;
 		if(prev == null){
 			firstStep = new NodeStep(name[0]);
 			firstStep.setInitial(true);
 			collection.put(name[0], firstStep);
+			if(coord.length == 2){
+				firstStep.setX(coord[0][0]);
+				firstStep.setY(coord[0][1]);
+
+			}
 		}
 		else{
 			//Divergence ET or simple branch
@@ -31,9 +36,13 @@ public class GrafcetMethods {
 				tmpStep = new NodeStep[name.length];
 				for(String s : name){
 					tmpStep[c] = new NodeStep(s);
+					if(coord.length != 0){
+						tmpStep[c].setX(coord[c][0]);
+						tmpStep[c].setY(coord[c][1]);
+					}
 					tmpTransi = new NodeTransition[1];
 					tmpTransi[0] = getNT(prev[0]);
-					
+
 					tmpStep[c].setPrevTransition(tmpTransi);
 					collection.put(s, tmpStep[c]);
 					c++;
@@ -44,6 +53,10 @@ public class GrafcetMethods {
 			else if(name.length == 1){
 				tmpStep = new NodeStep[1];
 				tmpStep[0] = new NodeStep(name[0]);
+				if(coord.length != 0){
+					tmpStep[0].setX(coord[0][0]);
+					tmpStep[0].setY(coord[0][1]);
+				}
 				collection.put(name[0], tmpStep[0]);
 				tmpTransi = new NodeTransition[prev.length];
 				for(String s : prev){
@@ -58,11 +71,16 @@ public class GrafcetMethods {
 			}
 		}
 	}
-	public void addS(String prev, String name) throws SyntaxGrafcetException{
+	public void addS(String prev, String name, int ... coord) throws SyntaxGrafcetException{
 		if(prev == null){
 			firstStep = new NodeStep(name);
 			firstStep.setInitial(true);
 			collection.put(name, firstStep);
+			if(coord.length == 2){
+				firstStep.setX(coord[0]);
+				firstStep.setY(coord[1]);
+
+			}
 		}
 		else{
 			//simple branch
@@ -74,9 +92,16 @@ public class GrafcetMethods {
 			tmpStep[0].setPrevTransition(tmpTransi);
 			collection.put(name, tmpStep[0]);
 			tmpTransi[0].setNextStep(tmpStep);
+
+			if(coord.length == 2){
+				tmpStep[0].setX(coord[0]);
+				tmpStep[0].setY(coord[1]);
+
+			}
 		}
+
 	}
-	
+
 	public void addT(String prev[], String name[], String[] ... cond ) throws SyntaxGrafcetException{
 		int c = 0;
 		if(prev == null){
@@ -91,7 +116,7 @@ public class GrafcetMethods {
 					tmpTransi[c] = new NodeTransition(s);
 					tmpStep = new NodeStep[1];
 					tmpStep[0] = getNS(prev[0]);
-					
+
 					tmpTransi[c].setPrevStep(tmpStep);
 					collection.put(s, tmpTransi[c]);
 					c++;
@@ -115,7 +140,7 @@ public class GrafcetMethods {
 				throw new SyntaxGrafcetException(0);
 			}
 		}
-		
+
 		c = 0;
 		int d = 0;
 		//for each transition
@@ -151,24 +176,24 @@ public class GrafcetMethods {
 
 			tmpTransi[0].setPrevStep(tmpStep);
 			collection.put(name, tmpTransi[0]);
-			
+
 			tmpStep[0].setNextTransition(tmpTransi);
 		}
 
 		int d = 0;
-			Bool b[] = new Bool[cond.length];
-			//for each condition
-			for(String ss : cond){
-				if(ss.contains(".x")){
-					String p = ss.substring(0, ss.length()-2);
-					b[d] = getNS(p).getActive();
-				}
-				else{
-					b[d] = variable.condition.get(ss);
-				}
-				d++;
+		Bool b[] = new Bool[cond.length];
+		//for each condition
+		for(String ss : cond){
+			if(ss.contains(".x")){
+				String p = ss.substring(0, ss.length()-2);
+				b[d] = getNS(p).getActive();
 			}
-			getNT(name).getTransition().setCondition(new Bool(b));
+			else{
+				b[d] = variable.condition.get(ss);
+			}
+			d++;
+		}
+		getNT(name).getTransition().setCondition(new Bool(b));
 	}
 	public void addFT(String prev[], String name[], String[] ... cond) throws SyntaxGrafcetException{
 		int c = 0;
@@ -182,7 +207,7 @@ public class GrafcetMethods {
 			tmpTransi[0].setPrevStep(tmpStep);
 			collection.put(name[0], tmpTransi[c]);
 			tmpStep[0].setNextTransition(tmpTransi);
-			
+
 			tmpStep = new NodeStep[1];
 			tmpStep[0] = firstStep;
 			tmpTransi[0].setNextStep(tmpStep);
@@ -200,7 +225,7 @@ public class GrafcetMethods {
 				c++;
 			}
 			tmpTransi[0].setPrevStep(tmpStep);
-			
+
 			tmpStep = new NodeStep[1];
 			tmpTransi = new NodeTransition[1];
 			tmpStep[0] = firstStep;
@@ -210,7 +235,7 @@ public class GrafcetMethods {
 		else{
 			throw new SyntaxGrafcetException(0);
 		}
-		
+
 		c = 0;
 		int d = 0;
 		//for each transition
@@ -243,7 +268,7 @@ public class GrafcetMethods {
 		collection.put(name, tmpTransi[0]);
 
 		tmpStep[0].setNextTransition(tmpTransi);
-		
+
 		tmpStep = new NodeStep[1];
 		tmpStep[0] = firstStep;
 		tmpTransi[0].setNextStep(tmpStep);
@@ -251,21 +276,21 @@ public class GrafcetMethods {
 
 		int d = 0;
 		Bool b[] = new Bool[cond.length];
-			//for each condition
-			for(String ss : cond){
-				if(ss.contains(".x")){
-					String p = ss.substring(0, ss.length()-2);
-					b[d] = getNS(p).getActive();
-				}
-				else{
-					b[d] = variable.condition.get(ss);
-				}
-				d++;
+		//for each condition
+		for(String ss : cond){
+			if(ss.contains(".x")){
+				String p = ss.substring(0, ss.length()-2);
+				b[d] = getNS(p).getActive();
 			}
-			getNT(name).getTransition().setCondition(new Bool(b));
+			else{
+				b[d] = variable.condition.get(ss);
+			}
+			d++;
+		}
+		getNT(name).getTransition().setCondition(new Bool(b));
 	}
-	
-	
+
+
 	public NodeStep getNS(String name) throws SyntaxGrafcetException{
 		NodeStep tmp = (NodeStep) collection.get(name);
 		if(tmp == null){
@@ -280,7 +305,7 @@ public class GrafcetMethods {
 		}
 		return tmp;
 	}
- 
+
 	public void setFirstStep(NodeStep first){
 		this.firstStep = first;
 	}
@@ -293,5 +318,5 @@ public class GrafcetMethods {
 	public NodeTransition getFirstTransi(){
 		return firstTransi;
 	}
-	
+
 }
