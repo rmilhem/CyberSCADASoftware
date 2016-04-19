@@ -1,0 +1,61 @@
+{
+	"title": "Database",
+	"description": "Recueil d'informations propres au projet CyberSCADA",
+	"variable": {
+		{
+			"id": 0,
+			"nom": "presenceTubeBalle"
+		},
+		{
+			"id": 1,
+			"nom": "actionneurChuteHaut"
+		},
+		{
+			"id": 2,
+			"nom": "actionneurChuteBas"
+		},
+		{
+			"id": 3,
+			"nom": "moteurBalle"
+		},
+		{
+			"id": 4,
+			"nom": "capteurBouchons"
+		},
+		{
+			"id": 5,
+			"nom": "stock_tube"
+		},
+		{
+			"id": 6,
+			"nom": "presenceTubeBouchons
+		},
+		{
+			"id": 7,
+			"nom": "running"
+		},
+		{
+			"id": 8,
+			"nom": "remplissage"
+		},
+		{
+			"id": 9,
+			"nom": "tournerPlateau"
+		},
+		{
+			"id": 10,
+			"nom": "bouchonner"
+		},
+		{
+			"id": 11,
+			"nom": "actionPinces"
+		}
+	},
+	"role": {
+		{
+			"id": 0,
+			"nom": "admin"
+		}
+	},
+	"right": {
+
