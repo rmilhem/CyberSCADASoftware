@@ -32,6 +32,14 @@ public class RightBase {
 				rights.addElement(right);
 				right = new Right(VariableAuto.tournerPlateau, true, role);
 				rights.addElement(right);
+				right = new Right(VariableAuto.boucher, true, role);
+				rights.addElement(right);
+				right = new Right(VariableAuto.actionPinces, true, role);
+				rights.addElement(right);
+				right = new Right(VariableAuto.presenceTubeBouchons, true, role);
+				rights.addElement(right);
+				right = new Right(VariableAuto.capteurBouchons, true, role);
+				rights.addElement(right);
 				// les droits en lecture
 				right = new Right(VariableAuto.actionneurChuteHaut, false, role);
 				rights.addElement(right);
@@ -46,6 +54,14 @@ public class RightBase {
 				right = new Right(VariableAuto.remplissage, false, role);
 				rights.addElement(right);
 				right = new Right(VariableAuto.tournerPlateau, false, role);
+				rights.addElement(right);
+				right = new Right(VariableAuto.boucher, false, role);
+				rights.addElement(right);
+				right = new Right(VariableAuto.actionPinces, false, role);
+				rights.addElement(right);
+				right = new Right(VariableAuto.presenceTubeBouchons, false, role);
+				rights.addElement(right);
+				right = new Right(VariableAuto.capteurBouchons, false, role);
 				rights.addElement(right);
 			}
 		}
