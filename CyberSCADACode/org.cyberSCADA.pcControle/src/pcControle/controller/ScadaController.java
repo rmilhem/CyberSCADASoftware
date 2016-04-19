@@ -94,7 +94,7 @@ public class ScadaController implements Initializable{
 		widgets.put(acBasB, VariableAuto.actionneurChuteBas);
 		widgets.put(acHautC, VariableAuto.actionneurChuteHaut);
 		widgets.put(acHautB, VariableAuto.actionneurChuteHaut);
-		widgets.put(boucher, VariableAuto.bouchonner);
+		widgets.put(boucher, VariableAuto.boucher);
 		widgets.put(capteurTubeBallesC, VariableAuto.presenceTubeBalle);
 		widgets.put(enMarcheC, VariableAuto.running);
 		widgets.put(enRotationC, VariableAuto.tournerPlateau);
@@ -134,9 +134,9 @@ public class ScadaController implements Initializable{
 	{
 		setOnOff(VariableAuto.actionPinces);
 	}
-	public void bouchonner()
+	public void boucher()
 	{
-		setOnOff(VariableAuto.bouchonner);
+		setOnOff(VariableAuto.boucher);
 	}
 	public void refreshAll()
 	{
@@ -179,8 +179,8 @@ public class ScadaController implements Initializable{
 	// ------------------------------------ SIMULATEUR ------------------------------------
 
 	
-	@FXML public void Bouchonner(ActionEvent event){
-		bouchonner();
+	@FXML public void Boucher(ActionEvent event){
+		boucher();
 		
 	}
 	

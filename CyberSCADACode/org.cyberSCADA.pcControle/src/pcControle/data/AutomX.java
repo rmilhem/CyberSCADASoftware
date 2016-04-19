@@ -27,7 +27,7 @@ public class AutomX extends AutomLecture{
 		ht.put(VariableAuto.presenceTubeBouchons, -1);
 		ht.put(VariableAuto.capteurBouchons, -1);
 		ht.put(VariableAuto.actionPinces, -1);
-		ht.put(VariableAuto.bouchonner, -1);
+		ht.put(VariableAuto.boucher, -1);
 		ht.put(VariableAuto.stock_tube, -1);
 		
 		// création de la capacité de communication de l'automate

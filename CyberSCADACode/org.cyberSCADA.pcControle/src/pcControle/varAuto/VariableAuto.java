@@ -11,6 +11,6 @@ public enum VariableAuto {
 	running, 
 	remplissage, 
 	tournerPlateau, 
-	bouchonner, 
+	boucher, 
 	actionPinces
 }

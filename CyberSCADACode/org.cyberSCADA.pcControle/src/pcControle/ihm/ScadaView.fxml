@@ -112,7 +112,7 @@
          </font>
       </Label>
       <Button fx:id="acPinces" layoutX="375.0" layoutY="588.0" mnemonicParsing="false" onAction="#acPinceTube" prefHeight="37.0" prefWidth="130.0" text="Ac Pinces" />
-      <Button fx:id="boucher" layoutX="234.0" layoutY="148.0" mnemonicParsing="false" onAction="#Bouchonner" prefHeight="37.0" prefWidth="113.0" text="Boucher" />
+      <Button fx:id="boucher" layoutX="234.0" layoutY="148.0" mnemonicParsing="false" onAction="#Boucher" prefHeight="37.0" prefWidth="113.0" text="Boucher" />
       <Label fx:id="titre" layoutX="452.0" prefHeight="69.0" prefWidth="376.0" text="IHM CyberSCADA" textAlignment="JUSTIFY">
          <font>
             <Font size="47.0" />
