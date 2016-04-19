@@ -1,7 +1,6 @@
 package pcControle.varAuto;
 
 public enum VariableAuto {
-	capteurPresence,
 	presenceTubeBalle, 
 	actionneurChuteHaut, 
 	actionneurChuteBas, 

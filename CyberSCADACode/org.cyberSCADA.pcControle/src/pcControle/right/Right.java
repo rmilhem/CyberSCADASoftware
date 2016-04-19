@@ -16,8 +16,8 @@ public class Right {
 		this.role = role;
 	}
 	
-	public boolean isOk(VariableAuto nomVar, boolean mode){
-		return this.nomVar == nomVar && this.mode == mode;
+	public boolean isOk(VariableAuto nomVar, boolean mode, Role role){
+		return this.nomVar == nomVar && this.mode == mode && this.role == role;
 	
 	}
 

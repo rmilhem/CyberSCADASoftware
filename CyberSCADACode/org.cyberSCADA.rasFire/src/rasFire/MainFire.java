@@ -1,44 +1,34 @@
 
 package rasFire;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.util.Scanner;
 
 public class MainFire {
 
 	public static void main(String arg[]) {
 
-		boolean enConnection = true;
-		boolean firewallRunning = true;
+		
 		final int port = 3333;
 		String msgRecuServeur = "";
 		String msgRecuRap = "";
-		
-
 		Firewall firewall = new Firewall();
 		ComPcControle com = new ComPcControle(port);
+		Scanner keyBoard = new Scanner(System.in);
+		
+		boolean repUtil = false;
 
-		while (firewallRunning) {
-
-			com.start();
-			System.out.println("Un Pc-Control s'est connecté");
-			while (enConnection) {
+	while(State.getReference().isRunning()){
+		com.start();
+		while (State.getReference().isEnConnectionIHM()) {
+			System.out.println("Lancer la connection avec les rapsberrys ?");
+			msgRecuServeur = com.getMessage();
+			repUtil = keyBoard.nextBoolean();
+			while (repUtil && State.getReference().isEnConnectionIHM()) {
 
 				pause(100);
-				try {
-					msgRecuServeur = com.getMessage();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					enConnection = false;
-					System.out.println("Un Pc-Control s'est déconnecté");
-				}
-				if (msgRecuServeur != null && !firewall.filtrer(msgRecuServeur)) {
+			
+				if (!firewall.filtrer(msgRecuServeur)) {
 					msgRecuRap = firewall.convModbus(msgRecuServeur);
 					//System.out.println("message non filtré : "+msgRecuServeur+" : " +msgRecuRap);
 					com.sendMessage(msgRecuRap);
@@ -46,13 +36,12 @@ public class MainFire {
 					 //System.out.println("Message venant du PC-Control FILTRE");
 					com.sendMessage("");
 				}
-			
-			
+				msgRecuServeur = com.getMessage();
 			}
-			com.closeConnection();
-		}
 
-		
+		}
+		com.closeConnection();
+	}
 
 	}
 

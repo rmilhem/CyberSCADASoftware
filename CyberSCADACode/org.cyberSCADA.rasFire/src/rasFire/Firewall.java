@@ -15,7 +15,6 @@ public class Firewall {
 		convertisseurModbus =  new ConvertisseurModbus();
 		// configuration des régles
 		// les droits en écriture
-		ruleBase.addRule(true, VariableAuto.capteurPresence);
 		ruleBase.addRule(true, VariableAuto.actionneurChuteHaut);
 		ruleBase.addRule(true, VariableAuto.actionneurChuteBas);
 		ruleBase.addRule(true, VariableAuto.moteurBalle);
@@ -23,7 +22,6 @@ public class Firewall {
 		ruleBase.addRule(true, VariableAuto.remplissage);
 		ruleBase.addRule(true, VariableAuto.tournerPlateau);
 		// les droits en lecture
-		ruleBase.addRule(false, VariableAuto.capteurPresence);
 		ruleBase.addRule(false, VariableAuto.presenceTubeBalle);
 		ruleBase.addRule(false, VariableAuto.actionneurChuteHaut);
 		ruleBase.addRule(false, VariableAuto.actionneurChuteBas);
@@ -41,6 +39,7 @@ public class Firewall {
 	// renvoie si le message a été filtré ou non
 	public boolean filtrer(String msg) {
 
+		if(msg != null){
 		String modeTemp = msg.split(" ")[0];
 		boolean mode = false;
 		if (modeTemp.equals("0"))
@@ -56,7 +55,8 @@ public class Firewall {
 			boolean filtre = !ruleBase.isCorrect(mode, VariableAuto.valueOf(variable));
 			return filtre;
 		} else
-			return true;
+			return true;}
+		else return false;
 	}
 
 	public String convModbus(String msg){

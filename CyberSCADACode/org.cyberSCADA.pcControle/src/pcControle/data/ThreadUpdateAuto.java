@@ -1,5 +1,4 @@
 package pcControle.data;
-import java.io.IOException;
 
 public class ThreadUpdateAuto extends Thread{
 

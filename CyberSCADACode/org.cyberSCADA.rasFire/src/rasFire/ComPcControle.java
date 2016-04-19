@@ -20,12 +20,20 @@ public class ComPcControle {
 	public ComPcControle(int port){
 		
 		this.port = port;
+		try {
+			s = new ServerSocket(port);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	public void start(){
 		try {
-			s = new ServerSocket(port);
+			System.out.println("En attente d'une connection avec une IHM");
 		    soc = s.accept();
+		    System.out.println("Une IHM est connectée");
+		    State.getReference().setEnConnectionIHM(true);
 			  // Un BufferedReader permet de lire par ligne.
 	        reader = new BufferedReader(
 	                               new InputStreamReader(soc.getInputStream())
@@ -42,12 +50,25 @@ public class ComPcControle {
 			e.printStackTrace();
 		}
 	}
-	public String getMessage() throws IOException{
+	public String getMessage(){
 		
-			return reader.readLine();
+		String messageRecu ="";
+			try {
+				messageRecu = reader.readLine();
+				if(messageRecu == null){
+					State.getReference().setEnConnectionIHM(false);
+					
+				}
+				return messageRecu;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Connection avec le PC interrompu");
+				State.getReference().setEnConnectionIHM(false);
 	
-	
+			}
+			return messageRecu;
 	}
+	
 	
 	public void sendMessage(String msgRecuRap){
 		if(msgRecuRap!= null){
@@ -55,6 +76,7 @@ public class ComPcControle {
 			
 		}
 	}
+
 	public void closeConnection(){
 		
 		try {

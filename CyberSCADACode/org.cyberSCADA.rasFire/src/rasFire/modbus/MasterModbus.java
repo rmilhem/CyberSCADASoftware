@@ -24,7 +24,6 @@ import net.wimpi.modbus.msg.WriteSingleRegisterResponse;
 import net.wimpi.modbus.net.TCPMasterConnection;
 import net.wimpi.modbus.procimg.Register;
 import net.wimpi.modbus.procimg.SimpleInputRegister;
-import net.wimpi.modbus.procimg.SimpleRegister;
 import net.wimpi.modbus.util.BitVector;
 
 /**
@@ -317,7 +316,8 @@ public class MasterModbus {
 			return res.getCoils().toString();
 
 		} catch (Exception ex) {
-			ex.printStackTrace();
+		if(ex.getMessage().equals("Connection refused")) return ex.getMessage();
+		else ex.printStackTrace();
 		}
 		return "";
 	}

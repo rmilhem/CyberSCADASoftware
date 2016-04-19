@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Hashtable;
 
 import pcControle.varAuto.VariableAuto;
@@ -23,6 +21,10 @@ public class Com {
 	
 	boolean socketConnecte;
 	
+	public boolean isSocketConnecte() {
+		return socketConnecte;
+	}
+
 	public Com(String firewallIp, int port, AutomX automate) {
 		this.automate = automate;
 		this.firewallIp = firewallIp;
@@ -32,8 +34,9 @@ public class Com {
 	
 	public boolean connect(){
 		try {
+			System.out.println("création d'une connection avec le firewall");
 			 soc = new Socket(firewallIp, port);
-		
+			 socketConnecte =true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Firewall unreachable");
@@ -61,12 +64,21 @@ public class Com {
 	}
 	
 	public void updateAutomate(){
-		// ouverture d'une socket avec le firewall
-
 		
 		String msgRecu = "";
 		String[] msgRecus;
-
+		
+		
+		while(!connect()){
+		System.out.println("La connection a échoué");
+		 System.out.println("Retentative de connection dans 5 secondes");
+			try {
+				Thread.sleep(50000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		while (socketConnecte) {
 
 			msgRecu = "";
@@ -87,7 +99,6 @@ public class Com {
 				 sendOrder(false, var, -1);
 				// Traitement de la réponse
 				try {
-					
 					msgRecu = reader.readLine();
 					//System.out.println(msgRecu);
 					
@@ -106,7 +117,6 @@ public class Com {
 			}
 			automate.aChange();
 		}
-		System.out.println("Connection perdu");
 		
 	}
 	public synchronized void sendOrder(boolean ecriture, VariableAuto nomVar, int val){

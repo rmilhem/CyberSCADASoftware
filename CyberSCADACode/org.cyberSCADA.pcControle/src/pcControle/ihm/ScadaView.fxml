@@ -13,95 +13,95 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="289.0" layoutX="379.0" layoutY="107.0" stroke="BLACK" strokeType="INSIDE" width="174.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="289.0" layoutX="727.0" layoutY="107.0" stroke="BLACK" strokeType="INSIDE" width="174.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="289.0" layoutX="553.0" layoutY="489.0" stroke="BLACK" strokeType="INSIDE" width="174.0" />
-      <Button fx:id="back" layoutX="1100.0" layoutY="720.0" mnemonicParsing="false" onAction="#backEvent" prefHeight="37.0" prefWidth="113.0" text="Quit" />
-      <Label alignment="CENTER" layoutX="379.0" layoutY="107.0" prefHeight="31.0" prefWidth="174.0" text="Caps Automaton">
+      <Button fx:id="quitter" layoutX="1100.0" layoutY="720.0" mnemonicParsing="false" onAction="#backEvent" prefHeight="37.0" prefWidth="113.0" text="Quitter" />
+      <Label fx:id="autBouchons" alignment="CENTER" layoutX="379.0" layoutY="107.0" prefHeight="31.0" prefWidth="174.0" text="Automate Bouchons">
          <font>
             <Font name="Arial Black" size="14.0" />
          </font></Label>
-      <Circle fx:id="presence_tube_bouchons" fill="WHITE" layoutX="580.0" layoutY="393.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="stock_bouchon" fill="WHITE" layoutX="394.0" layoutY="153.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-      <Label layoutX="465.0" layoutY="393.0" prefHeight="19.0" prefWidth="80.0" text="Tube Sensor">
+      <Circle fx:id="capteurTubeBouchonsC" fill="WHITE" layoutX="580.0" layoutY="393.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="stockBouchonsC" fill="WHITE" layoutX="394.0" layoutY="153.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label fx:id="capteurTubeBouchonsL" layoutX="465.0" layoutY="393.0" prefHeight="19.0" prefWidth="80.0" text="Capteur Tube">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="413.0" layoutY="144.0" text="Cap Storing">
+      <Label fx:id="stockBouchonsL" layoutX="413.0" layoutY="144.0" text="Stock Bouchons">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="727.0" layoutY="107.0" prefHeight="31.0" prefWidth="174.0" text="Balls Automaton">
+      <Label fx:id="autBalles" alignment="CENTER" layoutX="727.0" layoutY="107.0" prefHeight="31.0" prefWidth="174.0" text="Automate Balles">
          <font>
             <Font name="Arial Black" size="14.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="553.0" layoutY="486.0" prefHeight="31.0" prefWidth="174.0" text="Clamps Automaton">
+      <Label fx:id="autTubes" alignment="CENTER" layoutX="553.0" layoutY="486.0" prefHeight="31.0" prefWidth="174.0" text="Automate Tubes">
          <font>
             <Font name="Arial Black" size="14.0" />
          </font>
       </Label>
-      <Circle fx:id="actionneurHaut" fill="WHITE" layoutX="744.0" layoutY="153.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="actionneurBas" fill="WHITE" layoutX="744.0" layoutY="172.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="moteurBalle" fill="WHITE" layoutX="744.0" layoutY="192.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="isRunning" fill="WHITE" layoutX="900.0" layoutY="672.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="isTurning" fill="WHITE" layoutX="900.0" layoutY="625.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="capteur_tube" fill="WHITE" layoutX="699.0" layoutY="393.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="tube_sur_plateau" fill="WHITE" layoutX="640.0" layoutY="474.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="tube_en_stock" fill="WHITE" layoutX="568.0" layoutY="538.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-      <Label layoutX="727.0" layoutY="393.0" prefHeight="19.0" prefWidth="80.0" text="Tube sensor">
+      <Circle fx:id="acHautC" fill="WHITE" layoutX="744.0" layoutY="153.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="acBasC" fill="WHITE" layoutX="744.0" layoutY="172.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="acBallesC" fill="WHITE" layoutX="744.0" layoutY="192.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="enMarcheC" fill="WHITE" layoutX="900.0" layoutY="672.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="enRotationC" fill="WHITE" layoutX="900.0" layoutY="625.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="capteurTubeBallesC" fill="WHITE" layoutX="699.0" layoutY="393.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="tubePlateauC" fill="WHITE" layoutX="640.0" layoutY="474.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="stockTubesC" fill="WHITE" layoutX="568.0" layoutY="538.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label fx:id="capteurTubeBallesL" layoutX="727.0" layoutY="393.0" prefHeight="19.0" prefWidth="80.0" text="Capteur Tube">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="761.0" layoutY="144.0" text="Upper actuator">
+      <Label fx:id="acHautL" layoutX="761.0" layoutY="144.0" text="Ac Haut">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="761.0" layoutY="163.0" text="Lower actuator">
+      <Label fx:id="acBasL" layoutX="761.0" layoutY="163.0" text="Ac Bas">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="761.0" layoutY="182.0" text="Ball engine">
+      <Label fx:id="acBallesL" layoutX="761.0" layoutY="182.0" text="Ac Balles">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="920.0" layoutY="616.0" text="Plate turning">
+      <Label fx:id="enRotationL" layoutX="920.0" layoutY="616.0" text="En Rotation">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="920.0" layoutY="662.0" text="Running">
+      <Label fx:id="enMarcheL" layoutX="920.0" layoutY="662.0" text="En Marche">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="587.0" layoutY="529.0" text="Tube storing">
+      <Label fx:id="stockTubesL" layoutX="587.0" layoutY="529.0" text="Stock Tubes">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="686.0" layoutY="465.0" text="Tube on plate">
+      <Label fx:id="tubePlateauL" layoutX="686.0" layoutY="465.0" text="Tube sur Plateau">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
       
-      <Button fx:id="startAutomateB" layoutX="1100.0" layoutY="663.0" mnemonicParsing="false" onAction="#startAutomate" prefHeight="37.0" prefWidth="113.0" text="Start/Stop" />
-      <Button fx:id="Actionneur_Haut" layoutX="939.0" layoutY="144.0" mnemonicParsing="false" onAction="#actionneurHaut" prefHeight="37.0" prefWidth="130.0" text="Upper actuator" />
-      <Button fx:id="Actionneur_Bas" layoutX="939.0" layoutY="215.0" mnemonicParsing="false" onAction="#actionneurBas" prefHeight="37.0" prefWidth="130.0" text="Lower actuator" />
-      <Button fx:id="moteurBalleB" layoutX="939.0" layoutY="282.0" mnemonicParsing="false" onAction="#moteurBalle" prefHeight="37.0" prefWidth="113.0" text="Ball Engine" />
-      <Button fx:id="remplirTubeB" layoutX="940.0" layoutY="350.0" mnemonicParsing="false" onAction="#remplirTube" prefHeight="37.0" prefWidth="113.0" text="Fill tube" />
-      <Button fx:id="FaireTournerPlateau" layoutX="1100.0" layoutY="607.0" mnemonicParsing="false" onAction="#TournerPlateau" prefHeight="37.0" prefWidth="113.0" text="Rotate" />
+      <Button fx:id="marche" layoutX="1100.0" layoutY="663.0" mnemonicParsing="false" onAction="#startAutomate" prefHeight="37.0" prefWidth="113.0" text="Marche/Arrêt" />
+      <Button fx:id="acHautB" layoutX="939.0" layoutY="144.0" mnemonicParsing="false" onAction="#actionneurHaut" prefHeight="37.0" prefWidth="130.0" text="Ac Haut" />
+      <Button fx:id="acBasB" layoutX="939.0" layoutY="215.0" mnemonicParsing="false" onAction="#actionneurBas" prefHeight="37.0" prefWidth="130.0" text="Ac Bas" />
+      <Button fx:id="acBallesB" layoutX="939.0" layoutY="282.0" mnemonicParsing="false" onAction="#moteurBalle" prefHeight="37.0" prefWidth="113.0" text="Ac Balles" />
+      <Button fx:id="remplir" layoutX="940.0" layoutY="350.0" mnemonicParsing="false" onAction="#remplirTube" prefHeight="37.0" prefWidth="113.0" text="Remplissage" />
+      <Button fx:id="tournerPlateau" layoutX="1100.0" layoutY="607.0" mnemonicParsing="false" onAction="#TournerPlateau" prefHeight="37.0" prefWidth="113.0" text="Tourner" />
       <Circle fx:id="example_etat_vide" fill="YELLOW" layoutX="33.0" layoutY="718.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="exemple_etat_erreur" fill="RED" layoutX="33.0" layoutY="738.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fx:id="example_etat_bon" fill="BLUE" layoutX="33.0" layoutY="698.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-      <Label layoutX="47.0" layoutY="691.0" text="Ok/Yes" />
-      <Label layoutX="47.0" layoutY="711.0" text="Empty/No" />
-      <Label layoutX="47.0" layoutY="730.0" prefHeight="21.0" prefWidth="41.0" text="Error" />
-      <Label layoutX="891.0" layoutY="748.0" prefHeight="19.0" prefWidth="80.0" text="Filled tubes:">
+      <Label fx:id="oui" layoutX="47.0" layoutY="691.0" text="Oui/Rempli" />
+      <Label fx:id="non" layoutX="47.0" layoutY="711.0" text="Non/Vide" />
+      <Label fx:id="err" layoutX="47.0" layoutY="730.0" prefHeight="21.0" prefWidth="41.0" text="Erreur" />
+      <Label fx:id="accL" layoutX="891.0" layoutY="748.0" prefHeight="19.0" prefWidth="96.0" text="Tubes Remplis">
          <font>
             <Font size="13.0" />
          </font>
@@ -111,10 +111,9 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Button fx:id="MisEnPlaceTube" layoutX="575.0" layoutY="720.0" mnemonicParsing="false" onAction="#MettreTube" prefHeight="37.0" prefWidth="130.0" text="Mis en place tube" />
-      <Button fx:id="ActionPinceTube" layoutX="375.0" layoutY="588.0" mnemonicParsing="false" onAction="#acPinceTube" prefHeight="37.0" prefWidth="130.0" text="Clamp actuator" />
-      <Button fx:id="bouchonner" layoutX="234.0" layoutY="148.0" mnemonicParsing="false" onAction="#Bouchonner" prefHeight="37.0" prefWidth="113.0" text="Cap" />
-      <Label layoutX="153.0" layoutY="14.0" prefHeight="69.0" prefWidth="1075.0" text="GUI CyberSCADA en putain d'anglais" textAlignment="JUSTIFY">
+      <Button fx:id="acPinces" layoutX="375.0" layoutY="588.0" mnemonicParsing="false" onAction="#acPinceTube" prefHeight="37.0" prefWidth="130.0" text="Ac Pinces" />
+      <Button fx:id="boucher" layoutX="234.0" layoutY="148.0" mnemonicParsing="false" onAction="#Bouchonner" prefHeight="37.0" prefWidth="113.0" text="Boucher" />
+      <Label fx:id="titre" layoutX="452.0" prefHeight="69.0" prefWidth="376.0" text="IHM CyberSCADA" textAlignment="JUSTIFY">
          <font>
             <Font size="47.0" />
          </font>

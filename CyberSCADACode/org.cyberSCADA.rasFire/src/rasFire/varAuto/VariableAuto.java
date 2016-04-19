@@ -1,7 +1,6 @@
 package rasFire.varAuto;
 
 public enum VariableAuto {
-	capteurPresence, 
 	presenceTubeBalle, 
 	actionneurChuteHaut, 
 	actionneurChuteBas, 
